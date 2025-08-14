@@ -14,21 +14,15 @@
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    font-family: monospace;
+    font-family: 'Courier New', monospace;
     color: white;
   }
 
+  /* Glitchy text effect */
   #glitch {
     font-size: 2em;
     text-align: center;
-  }
-
-  #logo {
-    display: none;
-    width: 150px;
-    height: 150px;
-    opacity: 0;
-    transition: opacity 1s ease-in-out;
+    white-space: pre-line;
   }
 
   .static {
@@ -42,32 +36,46 @@
     75% { opacity: 0.8; transform: translate(-1px, 2px); }
     100% { opacity: 0.5; transform: translate(0, 0); }
   }
+
+  #message {
+    display: none;
+    font-size: 2.2em;
+    text-align: center;
+    line-height: 1.4em;
+    color: #00ffea;
+    text-shadow: 0 0 5px #00ffea, 0 0 10px #00ffea, 0 0 20px #00ffea;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+  }
+
 </style>
 </head>
 <body>
 
 <div id="glitch">NO SIGNAL</div>
-<img id="logo" src="yapp-icon.png" alt="Yapp Logo">
+<div id="message">
+  Forget the world outside. This is our culture.<br>
+  This is Yapp culture.
+</div>
 
 <script>
-  // After 3 seconds, hide glitch and show logo
-  setTimeout(() => {
-    const glitch = document.getElementById('glitch');
-    const logo = document.getElementById('logo');
-
-    glitch.style.display = 'none';
-    logo.style.display = 'block';
-
-    setTimeout(() => {
-      logo.style.opacity = 1;
-    }, 50); // small delay for transition
-  }, 3000);
-
-  // Optional: add some random static flicker
   const glitch = document.getElementById('glitch');
-  setInterval(() => {
+  const message = document.getElementById('message');
+
+  // Random static flicker
+  const flickerInterval = setInterval(() => {
     glitch.textContent = Math.random() > 0.5 ? 'NO SIGNAL' : '///////';
   }, 100);
+
+  // After 3 seconds, show the Yapp message
+  setTimeout(() => {
+    clearInterval(flickerInterval);
+    glitch.style.display = 'none';
+    message.style.display = 'block';
+    setTimeout(() => {
+      message.style.opacity = 1;
+    }, 50);
+  }, 3000);
 </script>
 
 </body>
