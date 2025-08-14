@@ -1,11 +1,74 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Yapp Culture</title>
-  </head>
-  <body>
-    <h1>Welcome to Yapp Culture</h1>
-    <p>Coming soon...</p>
-  </body>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yapp Splash</title>
+<style>
+  body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    font-family: monospace;
+    color: white;
+  }
+
+  #glitch {
+    font-size: 2em;
+    text-align: center;
+  }
+
+  #logo {
+    display: none;
+    width: 150px;
+    height: 150px;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+  }
+
+  .static {
+    animation: static-flicker 0.1s infinite;
+  }
+
+  @keyframes static-flicker {
+    0% { opacity: 0.2; transform: translate(2px, 2px); }
+    25% { opacity: 1; transform: translate(-2px, -2px); }
+    50% { opacity: 0.3; transform: translate(1px, -1px); }
+    75% { opacity: 0.8; transform: translate(-1px, 2px); }
+    100% { opacity: 0.5; transform: translate(0, 0); }
+  }
+</style>
+</head>
+<body>
+
+<div id="glitch">NO SIGNAL</div>
+<img id="logo" src="yapp-icon.png" alt="Yapp Logo">
+
+<script>
+  // After 3 seconds, hide glitch and show logo
+  setTimeout(() => {
+    const glitch = document.getElementById('glitch');
+    const logo = document.getElementById('logo');
+
+    glitch.style.display = 'none';
+    logo.style.display = 'block';
+
+    setTimeout(() => {
+      logo.style.opacity = 1;
+    }, 50); // small delay for transition
+  }, 3000);
+
+  // Optional: add some random static flicker
+  const glitch = document.getElementById('glitch');
+  setInterval(() => {
+    glitch.textContent = Math.random() > 0.5 ? 'NO SIGNAL' : '///////';
+  }, 100);
+</script>
+
+</body>
 </html>
