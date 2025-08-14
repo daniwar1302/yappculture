@@ -1,150 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Yapp</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Glitchy VHS Text</title>
+  <style>
+    body {
+      background-color: black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+    }
 
-<!-- Stilu font -->
-<link href="https://fonts.cdnfonts.com/css/stilu" rel="stylesheet">
+    .vhs-text {
+      font-family: 'Courier New', monospace;
+      font-size: 4rem;
+      color: white;
+      position: relative;
+      text-transform: uppercase;
+      animation: glitch 1.5s ease-in-out 1 forwards;
+    }
 
-<style>
-  body, html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    width: 100%;
-    background-color: white; /* changed to white */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    font-family: 'Stilu', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, monospace;
-    color: black; /* default text color black */
-  }
+    /* Glitch layers */
+    .vhs-text::before,
+    .vhs-text::after {
+      content: attr(data-text);
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      overflow: hidden;
+      clip: rect(0, 900px, 0, 0);
+    }
 
-  #glitch {
-    font-size: 6vw;
-    font-weight: bold;
-    text-align: center;
-    white-space: pre-line;
-  }
+    .vhs-text::before {
+      left: 2px;
+      text-shadow: -2px 0 red;
+      animation: glitchTop 1.5s ease-in-out 1 forwards;
+    }
 
-  @keyframes static-flicker {
-    0% { opacity: 0.2; transform: translate(2px, 2px); }
-    25% { opacity: 1; transform: translate(-2px, -2px); }
-    50% { opacity: 0.3; transform: translate(1px, -1px); }
-    75% { opacity: 0.8; transform: translate(-1px, 2px); }
-    100% { opacity: 0.5; transform: translate(0, 0); }
-  }
+    .vhs-text::after {
+      left: -2px;
+      text-shadow: -2px 0 blue;
+      animation: glitchBottom 1.5s ease-in-out 1 forwards;
+    }
 
-  .static {
-    animation: static-flicker 0.1s infinite;
-  }
+    /* Keyframes */
+    @keyframes glitch {
+      0% { transform: none; opacity: 1; }
+      20% { transform: skew(0.5deg); }
+      40% { transform: skew(-0.5deg); }
+      60% { transform: skew(0.5deg); }
+      80% { transform: skew(-0.5deg); }
+      100% { transform: none; opacity: 1; }
+    }
 
-  #message {
-    display: none;
-    font-size: 6vw;
-    font-weight: bold;
-    text-align: center;
-    line-height: 1.4em;
-    color: black;
-  }
+    @keyframes glitchTop {
+      0% { clip: rect(0, 900px, 0, 0); }
+      10% { clip: rect(10px, 900px, 50px, 0); transform: translate(-5px, -5px); }
+      30% { clip: rect(60px, 900px, 90px, 0); transform: translate(5px, -2px); }
+      50% { clip: rect(20px, 900px, 80px, 0); transform: translate(-3px, -1px); }
+      70% { clip: rect(0px, 900px, 60px, 0); transform: translate(3px, 0px); }
+      100% { clip: rect(0, 900px, 0, 0); transform: none; }
+    }
 
-  .line {
-    opacity: 0;
-    transition: opacity 0.8s ease-in-out;
-    padding: 0 5vw;
-  }
-
-  #line3 {
-    background-color: black; /* invert for contrast */
-    color: white;
-    display: inline-block; 
-    padding: 0.2em 0.5em;
-    margin-top: 0.5em;
-    position: relative; /* for glitch movement */
-  }
-
-  /* Footer text */
-  #footer {
-    position: absolute;
-    bottom: 40px;
-    text-align: center;
-    opacity: 0;
-    transition: opacity 1s ease-in-out;
-    color: black;
-  }
-
-  #footer span {
-    display: block;
-    margin-top: 5px;
-    font-size: 1.2em;
-    font-weight: bold;
-    letter-spacing: 1px;
-  }
-
-</style>
+    @keyframes glitchBottom {
+      0% { clip: rect(0, 900px, 0, 0); }
+      10% { clip: rect(80px, 900px, 140px, 0); transform: translate(5px, 5px); }
+      30% { clip: rect(20px, 900px, 60px, 0); transform: translate(-5px, 2px); }
+      50% { clip: rect(60px, 900px, 100px, 0); transform: translate(3px, 1px); }
+      70% { clip: rect(40px, 900px, 80px, 0); transform: translate(-3px, 0px); }
+      100% { clip: rect(0, 900px, 0, 0); transform: none; }
+    }
+  </style>
 </head>
 <body>
-
-<div id="glitch">NO SIGNAL</div>
-
-<div id="message">
-  <div class="line" id="line1">Forget the world outside.</div>
-  <div class="line" id="line2">This is our culture.</div>
-  <div class="line" id="line3">We are YAPP.</div>
-</div>
-
-<div id="footer">
-  <div>© 2025 Yapp</div>
-  <span>Coming Soon</span>
-</div>
-
-<script>
-  const glitch = document.getElementById('glitch');
-  const message = document.getElementById('message');
-  const line1 = document.getElementById('line1');
-  const line2 = document.getElementById('line2');
-  const line3 = document.getElementById('line3');
-  const footer = document.getElementById('footer');
-
-  // Glitch effect for NO SIGNAL
-  const flickerInterval = setInterval(() => {
-    glitch.textContent = Math.random() > 0.5 ? 'NO SIGNAL' : '///////';
-  }, 100);
-
-  // After 3 seconds, show the lines sequentially
-  setTimeout(() => {
-    clearInterval(flickerInterval);
-    glitch.style.display = 'none';
-    message.style.display = 'block';
-
-    setTimeout(() => { line1.style.opacity = 1; }, 100);
-    setTimeout(() => { line2.style.opacity = 1; }, 2100); // 2 seconds later
-    setTimeout(() => { 
-      line3.style.opacity = 1; 
-
-      // Subtle horizontal glitch on line3
-      const glitchInterval = setInterval(() => {
-        const x = (Math.random() - 0.5) * 6; // move ±3px
-        line3.style.transform = `translateX(${x}px)`;
-      }, 80);
-
-      // Stop glitch after 2 seconds
-      setTimeout(() => {
-        clearInterval(glitchInterval);
-        line3.style.transform = `translateX(0)`;
-
-        // Show footer after glitch
-        footer.style.opacity = 1;
-      }, 2000);
-
-    }, 4100); // 2 seconds after second line
-  }, 3000);
-
-</script>
-
+  <div class="vhs-text" data-text="YAPP">YAPP</div>
 </body>
 </html>
