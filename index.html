@@ -14,14 +14,14 @@
     padding: 0;
     height: 100%;
     width: 100%;
-    background-color: black;
+    background-color: white; /* changed to white */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     overflow: hidden;
     font-family: 'Stilu', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, monospace;
-    color: white;
+    color: black; /* default text color black */
   }
 
   #glitch {
@@ -49,7 +49,7 @@
     font-weight: bold;
     text-align: center;
     line-height: 1.4em;
-    color: white;
+    color: black;
   }
 
   .line {
@@ -59,8 +59,8 @@
   }
 
   #line3 {
-    background-color: white;
-    color: black;
+    background-color: black; /* invert for contrast */
+    color: white;
     display: inline-block; 
     padding: 0.2em 0.5em;
     margin-top: 0.5em;
@@ -74,6 +74,7 @@
     text-align: center;
     opacity: 0;
     transition: opacity 1s ease-in-out;
+    color: black;
   }
 
   #footer span {
@@ -81,7 +82,6 @@
     margin-top: 5px;
     font-size: 1.2em;
     font-weight: bold;
-    color: white;
     letter-spacing: 1px;
   }
 
