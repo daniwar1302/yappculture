@@ -1,150 +1,290 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Yapp</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Yapp</title>
 
-<!-- Stilu font -->
-<link href="https://fonts.cdnfonts.com/css/stilu" rel="stylesheet">
+  <!-- Stilu font -->
+  <link href="https://fonts.cdnfonts.com/css/stilu" rel="stylesheet">
 
-<style>
-  body, html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    width: 100%;
-    background-color: white; /* changed to white */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    font-family: 'Stilu', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, monospace;
-    color: black; /* default text color black */
-  }
+  <style>
+    :root{
+      --page-bg: #fff;       /* app style */
+      --page-fg: #000;
+      --invert-bg: #000;     /* pill style for "We are YAPP." */
+      --invert-fg: #fff;
+    }
 
-  #glitch {
-    font-size: 6vw;
-    font-weight: bold;
-    text-align: center;
-    white-space: pre-line;
-  }
+    /* Base layout — matches your app: white bg, black text */
+    html, body {
+      height: 100%;
+      margin: 0;
+      background: var(--page-bg);
+      color: var(--page-fg);
+      font-family: 'Stilu', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
 
-  @keyframes static-flicker {
-    0% { opacity: 0.2; transform: translate(2px, 2px); }
-    25% { opacity: 1; transform: translate(-2px, -2px); }
-    50% { opacity: 0.3; transform: translate(1px, -1px); }
-    75% { opacity: 0.8; transform: translate(-1px, 2px); }
-    100% { opacity: 0.5; transform: translate(0, 0); }
-  }
+    .stage {
+      min-height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+    }
 
-  .static {
-    animation: static-flicker 0.1s infinite;
-  }
+    /* Message block */
+    #message {
+      display: none;
+      font-weight: 800;
+      line-height: 1.3;
+      padding: 0 5vw;
+      font-size: clamp(22px, 6vw, 56px);
+    }
 
-  #message {
-    display: none;
-    font-size: 6vw;
-    font-weight: bold;
-    text-align: center;
-    line-height: 1.4em;
-    color: black;
-  }
+    .line {
+      opacity: 0;
+      transition: opacity 0.8s ease-in-out;
+      will-change: opacity;
+      margin: 0.15em 0;
+    }
 
-  .line {
-    opacity: 0;
-    transition: opacity 0.8s ease-in-out;
-    padding: 0 5vw;
-  }
+    /* “We are YAPP.” pill */
+    #line3 {
+      display: inline-block;
+      background: var(--invert-bg);
+      color: var(--invert-fg);
+      padding: 0.25em 0.6em;
+      border-radius: 0.35em;
+      position: relative;
+    }
 
-  #line3 {
-    background-color: black; /* invert for contrast */
-    color: white;
-    display: inline-block; 
-    padding: 0.2em 0.5em;
-    margin-top: 0.5em;
-    position: relative; /* for glitch movement */
-  }
+    /* Footer */
+    #footer {
+      position: fixed;
+      bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-weight: 700;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+      pointer-events: none;
+    }
+    #footer .cs {
+      margin-top: 6px;
+      letter-spacing: 0.04em;
+    }
 
-  /* Footer text */
-  #footer {
-    position: absolute;
-    bottom: 40px;
-    text-align: center;
-    opacity: 0;
-    transition: opacity 1s ease-in-out;
-    color: black;
-  }
+    /* ============================== */
+    /* VHS "NO SIGNAL" Crash Overlay  */
+    /* ============================== */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: #000;                  /* CRT black */
+      display: grid;
+      place-items: center;
+      z-index: 9999;
+      overflow: hidden;
+    }
 
-  #footer span {
-    display: block;
-    margin-top: 5px;
-    font-size: 1.2em;
-    font-weight: bold;
-    letter-spacing: 1px;
-  }
+    /* NO SIGNAL text (monochrome) */
+    .no-signal {
+      color: #fff;
+      font-weight: 900;
+      font-size: clamp(28px, 9vw, 80px);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      animation: ns-flicker 3s linear 1;
+      position: relative;
+      z-index: 3;
+    }
 
-</style>
+    /* Moving scanlines */
+    .scanlines {
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(255,255,255,0.08) 0px,
+        rgba(255,255,255,0.08) 1px,
+        rgba(0,0,0,0) 3px,
+        rgba(0,0,0,0) 5px
+      );
+      mix-blend-mode: screen;
+      animation: scan-roll 2.2s linear infinite;
+      opacity: 0.5;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* Static noise (monochrome blocks) */
+    .noise {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(0deg, rgba(255,255,255,0.05), rgba(0,0,0,0.05)),
+        repeating-conic-gradient(from 0deg, rgba(255,255,255,0.15) 0% 0.5%, rgba(0,0,0,0.15) 0.5% 1%);
+      background-size: 100% 100%, 200% 200%;
+      animation: noise-shift 0.35s steps(6) infinite;
+      opacity: 0.45;
+      z-index: 0;
+      filter: contrast(140%);
+      pointer-events: none;
+    }
+
+    /* Occasional horizontal tear bar */
+    .tear {
+      position: absolute;
+      left: -10%;
+      width: 120%;
+      height: 10px;
+      top: -20px;
+      background: rgba(255,255,255,0.35);
+      filter: blur(1px);
+      animation: tear-pass 1.2s ease-in-out infinite;
+      mix-blend-mode: screen;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    /* Quick “crash” flashes */
+    .flash {
+      position: absolute;
+      inset: 0;
+      background: #fff;
+      opacity: 0;
+      animation: flash-pop 3s ease-in-out 1;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    /* Overlay container shake */
+    .overlay {
+      animation: crash-jitter 3s ease-in-out 1;
+    }
+
+    /* ============ Keyframes ============ */
+    @keyframes scan-roll {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(8px); }  /* subtle roll */
+    }
+
+    @keyframes noise-shift {
+      0%   { background-position: 0% 0%, 0% 0%; }
+      100% { background-position: 0% 0%, 100% 100%; }
+    }
+
+    @keyframes tear-pass {
+      0%   { top: -10%; opacity: 0; }
+      10%  { opacity: 0.6; }
+      50%  { top: 110%; opacity: 0.4; }
+      100% { top: 110%; opacity: 0; }
+    }
+
+    @keyframes ns-flicker {
+      0%, 6%, 12%, 18%, 24%, 30%, 36%, 42%, 48%, 54%, 60%, 66%, 72%, 78%, 84%, 90%, 96% { opacity: 1; }
+      3%, 9%, 15%, 21%, 27%, 33%, 39%, 45%, 51%, 57%, 63%, 69%, 75%, 81%, 87%, 93%, 99% { opacity: 0.2; }
+    }
+
+    @keyframes flash-pop {
+      0% { opacity: 0; }
+      12% { opacity: 0.25; }
+      13% { opacity: 0; }
+      28% { opacity: 0.15; }
+      29% { opacity: 0; }
+      58% { opacity: 0.2; }
+      60% { opacity: 0; }
+      100% { opacity: 0; }
+    }
+
+    @keyframes crash-jitter {
+      0%   { transform: translate(0,0) skew(0deg); }
+      5%   { transform: translate(-2px,1px) skew(0.2deg); }
+      10%  { transform: translate(2px,-1px) skew(-0.2deg); }
+      15%  { transform: translate(-1px,2px) skew(0.15deg); }
+      20%  { transform: translate(1px,-2px) skew(-0.15deg); }
+      40%  { transform: translate(0,0) skew(0deg); }
+      60%  { transform: translate(1px,1px) skew(0.1deg); }
+      80%  { transform: translate(-1px,-1px) skew(-0.1deg); }
+      100% { transform: translate(0,0) skew(0deg); }
+    }
+  </style>
 </head>
 <body>
+  <!-- VHS Crash Overlay (plays once on load) -->
+  <div class="overlay" id="overlay">
+    <div class="scanlines"></div>
+    <div class="noise"></div>
+    <div class="tear"></div>
+    <div class="flash"></div>
+    <div class="no-signal" id="noSignal">NO SIGNAL</div>
+  </div>
 
-<div id="glitch">NO SIGNAL</div>
+  <!-- Main content (white bg / black text) -->
+  <main class="stage">
+    <div id="message">
+      <div class="line" id="line1">Forget the world outside.</div>
+      <div class="line" id="line2">This is our culture.</div>
+      <div class="line" id="line3">We are YAPP.</div>
+    </div>
 
-<div id="message">
-  <div class="line" id="line1">Forget the world outside.</div>
-  <div class="line" id="line2">This is our culture.</div>
-  <div class="line" id="line3">We are YAPP.</div>
-</div>
+    <div id="footer">
+      <div>© 2025 Yapp</div>
+      <div class="cs">Coming Soon</div>
+    </div>
+  </main>
 
-<div id="footer">
-  <div>© 2025 Yapp</div>
-  <span>Coming Soon</span>
-</div>
+  <script>
+    // Elements
+    const overlay = document.getElementById('overlay');
+    const message = document.getElementById('message');
+    const line1 = document.getElementById('line1');
+    const line2 = document.getElementById('line2');
+    const line3 = document.getElementById('line3');
+    const footer = document.getElementById('footer');
 
-<script>
-  const glitch = document.getElementById('glitch');
-  const message = document.getElementById('message');
-  const line1 = document.getElementById('line1');
-  const line2 = document.getElementById('line2');
-  const line3 = document.getElementById('line3');
-  const footer = document.getElementById('footer');
+    // Make NO SIGNAL text flicker characters a bit (monochrome)
+    const noSignal = document.getElementById('noSignal');
+    const nsInterval = setInterval(() => {
+      noSignal.textContent = Math.random() > 0.35 ? 'NO SIGNAL' : '//// /////';
+    }, 90);
 
-  // Glitch effect for NO SIGNAL
-  const flickerInterval = setInterval(() => {
-    glitch.textContent = Math.random() > 0.5 ? 'NO SIGNAL' : '///////';
-  }, 100);
-
-  // After 3 seconds, show the lines sequentially
-  setTimeout(() => {
-    clearInterval(flickerInterval);
-    glitch.style.display = 'none';
-    message.style.display = 'block';
-
-    setTimeout(() => { line1.style.opacity = 1; }, 100);
-    setTimeout(() => { line2.style.opacity = 1; }, 2100); // 2 seconds later
-    setTimeout(() => { 
-      line3.style.opacity = 1; 
-
-      // Subtle horizontal glitch on line3
-      const glitchInterval = setInterval(() => {
-        const x = (Math.random() - 0.5) * 6; // move ±3px
-        line3.style.transform = `translateX(${x}px)`;
-      }, 80);
-
-      // Stop glitch after 2 seconds
+    // AFTER ~3s: hide overlay, start line sequence
+    setTimeout(() => {
+      clearInterval(nsInterval);
+      overlay.style.transition = 'opacity 300ms ease';
+      overlay.style.opacity = '0';
       setTimeout(() => {
-        clearInterval(glitchInterval);
-        line3.style.transform = `translateX(0)`;
+        overlay.style.display = 'none';
+        // Show main sequence
+        message.style.display = 'block';
 
-        // Show footer after glitch
-        footer.style.opacity = 1;
-      }, 2000);
+        // Sequential reveals (2s spacing)
+        setTimeout(() => { line1.style.opacity = 1; }, 100);
+        setTimeout(() => { line2.style.opacity = 1; }, 2100);
+        setTimeout(() => {
+          line3.style.opacity = 1;
 
-    }, 4100); // 2 seconds after second line
-  }, 3000);
+          // Subtle horizontal jitter for 2s (±3px)
+          const jitter = setInterval(() => {
+            const x = (Math.random() - 0.5) * 6;
+            line3.style.transform = `translateX(${x}px)`;
+          }, 80);
+          setTimeout(() => {
+            clearInterval(jitter);
+            line3.style.transform = 'translateX(0)';
 
-</script>
+            // Fade in footer after line3 settles
+            footer.style.opacity = 1;
+          }, 2000);
+        }, 4100);
 
+      }, 320); // wait for overlay fade-out to finish
+    }, 3000);  // overlay plays for ~3s
+  </script>
 </body>
 </html>
