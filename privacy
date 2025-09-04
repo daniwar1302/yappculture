@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - YAPP</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; line-height: 1.6; }
+        h1 { color: #333; }
+        h2 { color: #555; margin-top: 30px; }
+        .last-updated { color: #666; font-style: italic; }
+    </style>
+</head>
+<body>
+    <h1>Privacy Policy</h1>
+    <p class="last-updated">Last updated: January 2025</p>
+
+    <h2>1. Information We Collect</h2>
+    <p>YAPP collects the following information to provide our social networking services:</p>
+    <ul>
+        <li><strong>Profile Information:</strong> Name, profile photo, phone number</li>
+        <li><strong>Location Data:</strong> Your current location to show nearby friends and spots</li>
+        <li><strong>Status Updates:</strong> Your custom status messages and auto-detected statuses (driving, on call, etc.)</li>
+        <li><strong>Friend Connections:</strong> Your friend list and friend requests</li>
+        <li><strong>Device Information:</strong> Device type, operating system, app version</li>
+        <li><strong>Usage Data:</strong> How you interact with the app to improve our services</li>
+    </ul>
+
+    <h2>2. How We Use Your Information</h2>
+    <p>We use your information to:</p>
+    <ul>
+        <li>Provide social networking features and friend connections</li>
+        <li>Show your location to friends (when enabled)</li>
+        <li>Display your status updates to friends</li>
+        <li>Send push notifications for friend requests and updates</li>
+        <li>Improve app performance and user experience</li>
+        <li>Provide customer support</li>
+    </ul>
+
+    <h2>3. Information Sharing</h2>
+    <p>We share your information only with:</p>
+    <ul>
+        <li><strong>Your Friends:</strong> Profile information, status updates, and location (when enabled)</li>
+        <li><strong>Service Providers:</strong> Firebase (Google) for app functionality and data storage</li>
+        <li><strong>Legal Requirements:</strong> When required by law or to protect our rights</li>
+    </ul>
+
+    <h2>4. Data Security</h2>
+    <p>We use industry-standard security measures to protect your data, including encryption and secure servers provided by Firebase (Google).</p>
+
+    <h2>5. Your Rights</h2>
+    <p>You have the right to:</p>
+    <ul>
+        <li>Access your personal data</li>
+        <li>Correct inaccurate information</li>
+        <li>Delete your account and data</li>
+        <li>Opt out of location sharing</li>
+        <li>Control push notification settings</li>
+    </ul>
+
+    <h2>6. Children's Privacy</h2>
+    <p>YAPP is not intended for children under 13. We do not knowingly collect personal information from children under 13.</p>
+
+    <h2>7. Contact Us</h2>
+    <p>If you have questions about this Privacy Policy, please contact us at:</p>
+    <p>Email: support@yappculture.com<br>
+    Website: <a href="http://yappculture.com">yappculture.com</a></p>
+
+    <h2>8. Changes to This Policy</h2>
+    <p>We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page.</p>
+</body>
+</html>
