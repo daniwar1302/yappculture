@@ -1,83 +1,126 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Support - YAPP</title>
-    <style>
-        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; line-height: 1.6; }
-        h1 { color: #333; }
-        h2 { color: #555; margin-top: 30px; }
-        .faq-item { margin-bottom: 20px; }
-        .question { font-weight: bold; color: #333; }
-        .answer { margin-top: 5px; }
-        .contact-info { background: #f5f5f5; padding: 20px; border-radius: 5px; margin-top: 30px; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Support — YAPP</title>
+  <style>
+    :root { --bg:#fff; --fg:#000; --muted:#333; --soft:#f4f4f4; --maxw:820px; }
+    html,body { background:var(--bg); color:var(--fg); margin:0; padding:0; font:16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    .wrap { max-width:var(--maxw); margin:0 auto; padding:28px 20px 64px; }
+    h1 { font-size:2rem; margin:.2em 0 .3em; }
+    h2 { font-size:1.25rem; margin:2rem 0 .6rem; }
+    h3 { font-size:1.05rem; margin:1.2rem 0 .4rem; }
+    p { margin:.6rem 0; color:var(--muted); }
+    ul { margin:.4rem 0 .8rem 1.2rem; }
+    li { margin:.25rem 0; }
+    .faq { margin-top:.5rem; }
+    .faq-item { margin:14px 0; }
+    .q { font-weight:700; color:#000; }
+    .a { margin-top:4px; color:var(--muted); }
+    .card { background:var(--soft); padding:16px; border-radius:8px; }
+    .grid { display:grid; gap:12px; }
+    a { color:#000; text-decoration:underline; }
+    footer { margin-top:48px; font-size:.95rem; color:var(--muted); }
+    .meta { font-size:.95rem; color:var(--muted); }
+    .list-tight li { margin:.15rem 0; }
+  </style>
 </head>
 <body>
+  <main class="wrap">
     <h1>YAPP Support</h1>
-    <p>Welcome to YAPP support! Here you'll find answers to common questions and ways to get help.</p>
+    <p class="meta">More yapping, less planning. If you need help, start with the FAQs below or contact us.</p>
 
     <h2>Frequently Asked Questions</h2>
+    <section class="faq">
+      <div class="faq-item">
+        <div class="q">How do I add friends?</div>
+        <div class="a">From the Add Friends screen, enter a friend’s phone number to send a request. They’ll receive a notification to accept or decline.</div>
+      </div>
 
-    <div class="faq-item">
-        <div class="question">How do I add friends?</div>
-        <div class="answer">You can add friends by sending them a friend request through their phone number. They'll receive a notification and can accept or decline your request.</div>
+      <div class="faq-item">
+        <div class="q">How does location sharing work?</div>
+        <div class="a">Location sharing is opt-in and only visible to accepted friends. You can enable/disable it anytime in <em>Profile → Privacy</em>. If disabled, your location is not shared.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="q">What are auto statuses?</div>
+        <div class="a">YAPP can set lightweight statuses based on device signals (e.g., Driving, On Call, Do Not Disturb, Silent). You can turn auto statuses off in <em>Settings → Status</em>.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="q">How do I change my status?</div>
+        <div class="a">Tap your profile/status and choose a custom status. Auto statuses may temporarily override while active (e.g., during a phone call).</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="q">Why can’t I see my friends in the widget?</div>
+        <div class="a">Ensure you’ve added friends and they’re active. Open the app to refresh. On iOS, check <em>Settings → Privacy &amp; Security → Location Services</em> and allow YAPP access.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="q">I’m not receiving notifications.</div>
+        <div class="a">On iPhone: <em>Settings → Notifications → YAPP</em>, allow alerts/badges/sounds. Make sure Focus/Do Not Disturb isn’t blocking alerts. Then open YAPP once to re-register.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="q">How do I delete my account?</div>
+        <div class="a">In the app, go to <em>Settings → Account → Delete Account</em>. This permanently removes your account and associated data, subject to legal/anti-abuse retention.</div>
+      </div>
+    </section>
+
+    <h2>Report Abuse or Objectionable Content</h2>
+    <div class="card">
+      <p>Use the in-app <strong>Report</strong> button on any profile, post, or message. We review reports within <strong>24 hours</strong> and may remove content and/or eject offending users per our EULA and Terms.</p>
+      <p>Can’t access the app? Email <a href="mailto:support@yappculture.com">support@yappculture.com</a> with screenshots/links.</p>
     </div>
 
-    <div class="faq-item">
-        <div class="question">How does location sharing work?</div>
-        <div class="answer">YAPP shows your location to friends when you're online. You can control this in your privacy settings. Location is only shared with friends you've connected with.</div>
-    </div>
-
-    <div class="faq-item">
-        <div class="question">What are auto statuses?</div>
-        <div class="answer">Auto statuses are automatically detected based on your device state: Driving (when moving above 15 MPH), On Call (during phone calls), Do Not Disturb, and Silent Mode.</div>
-    </div>
-
-    <div class="faq-item">
-        <div class="question">How do I change my status?</div>
-        <div class="answer">Tap on your profile picture or status area in the app to update your custom status message. Auto statuses will override custom statuses when detected.</div>
-    </div>
-
-    <div class="faq-item">
-        <div class="question">Why can't I see my friends in the widget?</div>
-        <div class="answer">Make sure you have friends added and they're online. The widget shows friends who are currently active. Try refreshing the widget by opening the main app.</div>
-    </div>
-
-    <div class="faq-item">
-        <div class="question">How do I delete my account?</div>
-        <div class="answer">Go to Settings in the app and look for the "Delete Account" option. This will permanently remove your account and all associated data.</div>
-    </div>
-
-    <div class="faq-item">
-        <div class="question">I'm not receiving notifications</div>
-        <div class="answer">Check your device's notification settings for YAPP. Make sure notifications are enabled and not blocked by Do Not Disturb mode.</div>
-    </div>
-
-    <h2>Getting Help</h2>
-    <p>If you can't find the answer to your question above, we're here to help!</p>
-
-    <div class="contact-info">
-        <h3>Contact Support</h3>
-        <p><strong>Email:</strong> support@yappculture.com</p>
-        <p><strong>Response Time:</strong> We typically respond within 24-48 hours</p>
-        <p><strong>When contacting us, please include:</strong></p>
-        <ul>
-            <li>Your device type (iPhone model)</li>
-            <li>iOS version</li>
-            <li>YAPP version</li>
-            <li>Description of the issue</li>
-            <li>Steps to reproduce the problem (if applicable)</li>
+    <h2>Contact Support</h2>
+    <div class="card grid">
+      <div>
+        <h3>Email</h3>
+        <p><a href="mailto:support@yappculture.com">support@yappculture.com</a></p>
+      </div>
+      <div>
+        <h3>Response Time</h3>
+        <p>Typically within 24–48 hours.</p>
+      </div>
+      <div>
+        <h3>Include in Your Message</h3>
+        <ul class="list-tight">
+          <li>iPhone model</li>
+          <li>iOS version</li>
+          <li>YAPP app version</li>
+          <li>Issue summary + steps to reproduce</li>
+          <li>Screenshots or screen recording (if possible)</li>
         </ul>
+      </div>
     </div>
 
-    <h2>App Information</h2>
-    <p><strong>Current Version:</strong> 1.0</p>
-    <p><strong>Minimum iOS Version:</strong> iOS 15.0</p>
-    <p><strong>Last Updated:</strong> January 2025</p>
+    <h2>Troubleshooting Basics</h2>
+    <ul>
+      <li>Open YAPP → log out and back in.</li>
+      <li>Check App Store for updates to YAPP.</li>
+      <li>Restart your iPhone.</li>
+      <li>For location issues: ensure Location Services are enabled for YAPP.</li>
+      <li>For notifications: confirm YAPP notifications are allowed and not blocked by Focus.</li>
+    </ul>
 
-    <h2>Privacy & Terms</h2>
-    <p><a href="privacy.html">Privacy Policy</a> | <a href="terms.html">Terms of Service</a></p>
+    <h2>App Info</h2>
+    <p><strong>Current Version:</strong> 1.0</p>
+    <p><strong>Minimum iOS:</strong> iOS 15.0</p>
+    <p><strong>Last Updated:</strong> October 14, 2025</p>
+
+    <h2>Policies</h2>
+    <p>
+      <a href="EULA.html">EULA</a> •
+      <a href="terms.html">Terms of Service</a> •
+      <a href="privacy.html">Privacy Policy</a>
+    </p>
+
+    <footer>
+      <p>© 2025 YAPP</p>
+    </footer>
+  </main>
 </body>
 </html>
