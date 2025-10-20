@@ -6,81 +6,109 @@
   <title>Support • YAPP</title>
   <meta name="description" content="Get help with YAPP. Contact support, read FAQs, and find links to our EULA, Terms of Service, and Privacy Policy." />
 
-  <!-- Basic, self-contained styling to match policy pages -->
   <style>
-    :root{
-      --bg: #0b0c0f;
-      --card: #111319;
-      --text: #e6e8f0;
-      --muted:#a6adbb;
-      --link:#8ab4ff;
-      --border:#1a1f2b;
-      --accent:#dbeafe;
+    :root {
+      --bg: #ffffff;
+      --card: #ffffff;
+      --text: #111111;
+      --muted: #666666;
+      --link: #185adb;
+      --border: #e5e7eb;
     }
-    @media (prefers-color-scheme: light){
-      :root{
-        --bg:#fafafa; --card:#ffffff; --text:#0a0a0a; --muted:#5b6472; --link:#185adb; --border:#e7e7e7; --accent:#0a0a0a;
-      }
+
+    html, body {
+      height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      margin: 0;
+      font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
-    html,body{height:100%}
-    body{
-      margin:0;
-      font: 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
-      color:var(--text);
-      background:var(--bg);
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-    .container{
+
+    .container {
       max-width: 760px;
       margin: 32px auto 96px;
       padding: 0 20px;
     }
-    .card{
+
+    .card {
       background: var(--card);
-      border:1px solid var(--border);
+      border: 1px solid var(--border);
       border-radius: 16px;
       padding: 28px;
-      box-shadow: 0 6px 24px rgba(0,0,0,.18);
+      box-shadow: 0 4px 18px rgba(0,0,0,0.05);
     }
-    h1{
+
+    h1 {
       font-size: 28px;
-      line-height:1.25;
-      margin:0 0 10px 0;
-      letter-spacing:.2px;
+      margin: 0 0 10px;
     }
-    .subtitle{
-      color:var(--muted);
-      margin:0 0 18px 0;
-      font-size:14px;
+
+    .subtitle {
+      color: var(--muted);
+      margin: 0 0 18px;
+      font-size: 14px;
     }
-    hr{
-      border:0; height:1px; background:var(--border); margin:22px 0;
+
+    hr {
+      border: 0;
+      height: 1px;
+      background: var(--border);
+      margin: 24px 0;
     }
-    h2{
-      font-size: 18px; margin:22px 0 10px;
+
+    h2 {
+      font-size: 18px;
+      margin: 22px 0 10px;
     }
-    p{margin: 10px 0}
-    ul{margin:6px 0 16px 1.2rem}
-    a{color:var(--link); text-decoration: none}
-    a:hover{text-decoration: underline}
-    .footer{
-      color:var(--muted);
+
+    a {
+      color: var(--link);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    details summary {
+      cursor: pointer;
+      font-weight: 600;
+      margin: 8px 0;
+    }
+
+    details > details summary {
+      font-weight: 500;
+      margin-left: 1rem;
+    }
+
+    .footer {
+      color: var(--muted);
       font-size: 14px;
       margin-top: 18px;
     }
-    .nav{
-      display:flex; gap:14px; flex-wrap: wrap;
-      font-size:14px; margin-top:2px
+
+    .nav {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      font-size: 14px;
+      margin-top: 4px;
     }
-    .badge{
-      display:inline-block;
-      border:1px solid var(--border);
-      padding:2px 8px; border-radius:999px;
-      font-size:12px; color:var(--muted)
+
+    .badge {
+      border: 1px solid var(--border);
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 12px;
+      color: var(--muted);
     }
-    .help-list a{display:inline-block; margin: 4px 0}
-    .spacer{height:4px}
+
+    .help-list a {
+      display: inline-block;
+      margin: 4px 0;
+    }
+
+    .spacer { height: 4px; }
   </style>
 </head>
 <body>
@@ -88,7 +116,7 @@
     <article class="card" role="article" aria-labelledby="title">
       <header>
         <h1 id="title">Support</h1>
-        <p class="subtitle">Help center • Contact • FAQs</p>
+        <p class="subtitle">Help Center • Contact • FAQs</p>
         <nav class="nav" aria-label="Quick links">
           <a href="index.html">← Back to Home</a>
           <span class="badge">YAPP</span>
@@ -98,10 +126,9 @@
       <hr>
 
       <section aria-labelledby="contact">
-        <h2 id="contact">Contact us</h2>
-        <p>Email us and we’ll get back to you as soon as possible.</p>
+        <h2 id="contact">Contact Us</h2>
+        <p>Need help with the app, billing, or your account? Email us and we’ll get back to you as soon as possible.</p>
         <p><strong>Email:</strong> <a href="mailto:support@yapp.app">support@yapp.app</a></p>
-        <p>When you write in, it helps to include:</p>
         <ul>
           <li>Your device model and iOS version</li>
           <li>Steps to reproduce the issue (if it’s a bug)</li>
@@ -110,84 +137,80 @@
       </section>
 
       <section aria-labelledby="faq">
-  <h2 id="faq">FAQs</h2>
+        <h2 id="faq">FAQs</h2>
 
-  <!-- GETTING STARTED -->
-  <details>
-    <summary><strong>GETTING STARTED</strong></summary>
-    <div class="spacer"></div>
-    <details>
-      <summary><strong>How do I add friends?</strong></summary>
-      <p>You can add friends by tapping the “Add from Contacts” button in the Friends view, or by sharing your YAPP profile link with them.</p>
-    </details>
-    <details>
-      <summary><strong>How do I update my profile?</strong></summary>
-      <p>Go to <em>Settings → Edit Profile</em> to update your name, profile photo, and other personal information.</p>
-    </details>
-    <details>
-      <summary><strong>How do I update my status?</strong></summary>
-      <p>Tap on your profile image in the Friends view and select “Add a Note” to update your status with a custom message.</p>
-    </details>
-  </details>
+        <!-- GETTING STARTED -->
+        <details>
+          <summary><strong>GETTING STARTED</strong></summary>
+          <details>
+            <summary>How do I add friends?</summary>
+            <p>You can add friends by tapping the “Add from Contacts” button in the Friends view, or by sharing your YAPP profile link with them.</p>
+          </details>
+          <details>
+            <summary>How do I update my profile?</summary>
+            <p>Go to <em>Settings → Edit Profile</em> to update your name, profile photo, and other personal information.</p>
+          </details>
+          <details>
+            <summary>How do I update my status?</summary>
+            <p>Tap on your profile image in the Friends view and select “Add a Note” to update your status with a custom message.</p>
+          </details>
+        </details>
 
-  <!-- YAPPING & CONNECTING -->
-  <details>
-    <summary><strong>YAPPING &amp; CONNECTING</strong></summary>
-    <div class="spacer"></div>
-    <details>
-      <summary><strong>What is yapping?</strong></summary>
-      <p>“Yapping” is our way of saying chatting or talking—it’s how you communicate with your friends on YAPP.</p>
-    </details>
-    <details>
-      <summary><strong>How do I send a yap?</strong></summary>
-      <p>Tap on a friend’s profile to open their detail view, then tap “Send Yap” to start a conversation.</p>
-    </details>
-    <details>
-      <summary><strong>What is 6&deg; Yappers?</strong></summary>
-      <p>6&deg; Yappers shows you friends-of-friends—people you might know through mutual connections.</p>
-    </details>
-    <details>
-      <summary><strong>What does “Too far to yap” mean?</strong></summary>
-      <p>It means the person is outside your yapping range. You can only yap with people who are nearby.</p>
-    </details>
-    <details>
-      <summary><strong>How do I send a wave?</strong></summary>
-      <p>Tap on a friend’s profile and select “Send Wave” to let them know you’re thinking of them.</p>
-    </details>
-  </details>
+        <!-- YAPPING & CONNECTING -->
+        <details>
+          <summary><strong>YAPPING &amp; CONNECTING</strong></summary>
+          <details>
+            <summary>What is yapping?</summary>
+            <p>“Yapping” is our way of saying chatting or talking—it’s how you communicate with your friends on YAPP.</p>
+          </details>
+          <details>
+            <summary>How do I send a yap?</summary>
+            <p>Tap on a friend’s profile to open their detail view, then tap “Send Yap” to start a conversation.</p>
+          </details>
+          <details>
+            <summary>What is 6&deg; Yappers?</summary>
+            <p>6&deg; Yappers shows you friends-of-friends—people you might know through mutual connections.</p>
+          </details>
+          <details>
+            <summary>What does “Too far to yap” mean?</summary>
+            <p>It means the person is outside your yapping range. You can only yap with people who are nearby.</p>
+          </details>
+          <details>
+            <summary>How do I send a wave?</summary>
+            <p>Tap on a friend’s profile and select “Send Wave” to let them know you’re thinking of them.</p>
+          </details>
+        </details>
 
-  <!-- PRIVACY & SAFETY -->
-  <details>
-    <summary><strong>PRIVACY &amp; SAFETY</strong></summary>
-    <div class="spacer"></div>
-    <details>
-      <summary><strong>Is my location shared?</strong></summary>
-      <p>Your exact location is never shared. We only share your estimated proximity and show that you’re “nearby” to other users.</p>
-    </details>
-    <details>
-      <summary><strong>Can I control who sees me?</strong></summary>
-      <p>Yes. You can block users and control your visibility in Settings.</p>
-    </details>
-    <details>
-      <summary><strong>How do I report someone?</strong></summary>
-      <p>Tap on their profile and select “Report” to report inappropriate behavior.</p>
-    </details>
-  </details>
+        <!-- PRIVACY & SAFETY -->
+        <details>
+          <summary><strong>PRIVACY &amp; SAFETY</strong></summary>
+          <details>
+            <summary>Is my location shared?</summary>
+            <p>Your exact location is never shared. We only share your estimated proximity and show that you’re “nearby” to other users.</p>
+          </details>
+          <details>
+            <summary>Can I control who sees me?</summary>
+            <p>Yes. You can block users and control your visibility in Settings.</p>
+          </details>
+          <details>
+            <summary>How do I report someone?</summary>
+            <p>Tap on their profile and select “Report” to report inappropriate behavior.</p>
+          </details>
+        </details>
 
-  <!-- TROUBLESHOOTING -->
-  <details>
-    <summary><strong>TROUBLESHOOTING</strong></summary>
-    <div class="spacer"></div>
-    <details>
-      <summary><strong>The app is not working</strong></summary>
-      <p>Try closing and reopening the app, or restart your device. Make sure you have a stable internet connection.</p>
-    </details>
-    <details>
-      <summary><strong>I can’t find nearby friends</strong></summary>
-      <p>Make sure Location Services are enabled for YAPP.</p>
-    </details>
-  </details>
-</section>
+        <!-- TROUBLESHOOTING -->
+        <details>
+          <summary><strong>TROUBLESHOOTING</strong></summary>
+          <details>
+            <summary>The app is not working</summary>
+            <p>Try closing and reopening the app, or restart your device. Make sure you have a stable internet connection.</p>
+          </details>
+          <details>
+            <summary>I can’t find nearby friends</summary>
+            <p>Make sure Location Services are enabled for YAPP.</p>
+          </details>
+        </details>
+      </section>
 
       <section aria-labelledby="policies">
         <h2 id="policies">Policies</h2>
@@ -196,7 +219,6 @@
           <a href="TermsOfService.html">Terms of Service</a><br>
           <a href="PrivacyPolicy.html">Privacy Policy</a>
         </p>
-        <p class="subtitle">These documents apply to your use of YAPP and describe your rights and responsibilities. They are hosted on the same site for consistency and version control.</p>
       </section>
 
       <hr>
