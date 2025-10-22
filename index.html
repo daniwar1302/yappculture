@@ -8,84 +8,98 @@
   <link href="https://fonts.cdnfonts.com/css/stilu" rel="stylesheet" />
 
   <style>
-    :root {
-      --bg: #ffffff;
-      --fg: #000000;
-      --link: #555555;
-      --link-hover: #000000;
+    :root{
+      --bg:#ffffff; --fg:#000000;
+      --link:#555; --link-hover:#000;
+      --brand:#9425FF;
     }
 
-    html, body {
-      margin: 0;
-      padding: 0;
-      background: var(--bg);
-      color: var(--fg);
-      font-family: 'Stilu', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      text-align: center;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
+    /* Base layout */
+    html,body{margin:0; padding:0; background:var(--bg); color:var(--fg);
+      font-family:'Stilu', -apple-system, BlinkMacSystemFont,"Segoe UI", Roboto, Helvetica, Arial, sans-serif;}
+    body{display:flex; min-height:100vh; flex-direction:column;}
 
-    h1 {
-      font-weight: 800;
-      font-size: clamp(28px, 6vw, 56px);
-      margin-bottom: 0.3em;
-      letter-spacing: -0.02em;
+    /* Header */
+    .site-header{
+      position:sticky; top:0; z-index:10;
+      backdrop-filter:saturate(180%) blur(8px);
+      background:rgba(255,255,255,.8);
+      border-bottom:1px solid #eee;
     }
+    .container{max-width:1100px; margin:0 auto; padding:0 20px;}
+    .nav{display:flex; align-items:center; justify-content:space-between; height:64px;}
+    .brand{display:flex; align-items:center; gap:.6rem; font-weight:800; letter-spacing:-.02em;}
+    .brand img{height:28px; width:28px}
+    .brand a{color:inherit; text-decoration:none; font-size:20px}
 
-    h2 {
-      font-weight: 500;
-      font-size: clamp(18px, 3vw, 28px);
-      margin-top: 0;
-      margin-bottom: 1.5em;
-      color: #222;
+    .cta{
+      display:inline-flex; align-items:center; justify-content:center;
+      height:40px; padding:0 16px; border-radius:999px;
+      font-weight:700; text-decoration:none; border:1.5px solid var(--brand);
+      color:#fff; background:var(--brand);
+      transition:transform .06s ease, box-shadow .2s ease, opacity .2s ease;
     }
+    .cta:hover{transform:translateY(-1px); box-shadow:0 6px 16px rgba(148,37,255,.18)}
+    .cta:active{transform:translateY(0)}
 
-    p {
-      max-width: 700px;
-      font-size: clamp(16px, 2.5vw, 20px);
-      line-height: 1.6;
-      margin: 0.5em auto;
-      color: #111;
-    }
+    /* Hero */
+    main{flex:1; display:block}
+    .hero{padding:72px 0}
+    .hero .container{display:grid; grid-template-columns:1fr; gap:16px}
+    h1{font-weight:800; font-size:clamp(28px,6vw,56px); margin:0 0 .2em; letter-spacing:-.02em;}
+    h2{font-weight:500; font-size:clamp(18px,3vw,28px); margin:.2em 0 1em; color:#222}
+    p{max-width:680px; font-size:clamp(16px,2.2vw,20px); line-height:1.6; margin:.4em 0; color:#111}
 
-    footer {
-      margin-top: 3em;
-      font-size: 14px;
-      color: var(--link);
-    }
+    /* Left alignment like the reference */
+    .hero *{text-align:left}
 
-    footer a {
-      color: var(--link);
-      text-decoration: none;
-      margin: 0 8px;
-      transition: color 0.2s ease-in-out;
-    }
+    footer{margin:40px 0; font-size:14px; color:var(--link); text-align:center}
+    footer a{color:var(--link); text-decoration:none; margin:0 8px}
+    footer a:hover{color:var(--link-hover)}
 
-    footer a:hover {
-      color: var(--link-hover);
+    /* Mobile tweaks */
+    @media (max-width:600px){
+      .nav{height:56px}
+      .brand a{font-size:18px}
+      .cta{height:38px; padding:0 14px}
+      .hero{padding:56px 0}
     }
   </style>
 </head>
 <body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container">
+      <nav class="nav" aria-label="Primary">
+        <div class="brand">
+          <img src="YAPP-3.png" alt="YAPP logo" />
+          <a href="/">YAPP</a>
+        </div>
+        <a class="cta" href="https://apps.apple.com/us/app/yapp-for-yappers-by-yappers/id6753838216">
+          Get the App
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
   <main>
-    <h1>YAPP: For Yappers, By Yappers</h1>
-
-
-    <p><strong>Right People, Place, and Time.</strong></p>
-    <p>YAPP is for the yappers out there who love staying connected — whether your friends are nearby or across the world. We help you spend more time actually hanging out by showing you what your friends are up to when it matters most. See who's free, send instant invites to your favorite spots, and meet up spontaneously — no overthinking, no planning fatigue.</p>
-    <p>Ditch the endless scheduling and calendar chaos — because friendship shouldn’t feel like a meeting invite.</p>
+    <section class="hero">
+      <div class="container">
+        <h1>YAPP: For Yappers, By Yappers</h1>
+        <h2>Right People, Place, and Time.</h2>
+        <p>YAPP is for the yappers out there who love staying connected — whether your friends are nearby or across the world. We help you spend more time actually hanging out by showing you what your friends are up to when it matters most. See who's free, send instant invites to your favorite spots, and meet up spontaneously — no overthinking, no planning fatigue.</p>
+        <p>Ditch the endless scheduling and calendar chaos — because friendship shouldn’t feel like a meeting invite.</p>
+      </div>
+    </section>
   </main>
 
   <footer>
     <div>© 2025 YAPP</div>
     <div>
-      <a href="EULA.html">EULA</a> • 
-      <a href="TermsOfService.html">Terms Of Service</a> • 
-      <a href="PrivacyPolicy.html">Privacy Policy</a> • 
+      <a href="EULA.html">EULA</a> •
+      <a href="TermsOfService.html">Terms Of Service</a> •
+      <a href="PrivacyPolicy.html">Privacy Policy</a> •
       <a href="Support.html">Support</a>
     </div>
   </footer>
