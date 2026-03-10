@@ -2,232 +2,324 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Support • YAPP</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Support — YAPP</title>
   <meta name="description" content="Get help with YAPP. Contact support, read FAQs, and find links to our EULA, Terms of Service, and Privacy Policy." />
-
+  <link rel="icon" type="image/png" href="YAPP-3.png" />
+  <link href="https://fonts.cdnfonts.com/css/stilu" rel="stylesheet" />
   <style>
     :root {
-      --bg: #ffffff;
-      --card: #ffffff;
-      --text: #111111;
-      --muted: #666666;
-      --link: #185adb;
-      --border: #e5e7eb;
+      --bg: #ffffff; --fg: #0a0a0a; --muted: #666; --faint: #999;
+      --border: #e8e8e8; --surface: #f7f6fa; --brand: #9425FF;
+      --brand-light: rgba(148,37,255,.07); --brand-glow: rgba(148,37,255,.18);
+      --maxw: 720px; --radius: 14px;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    html, body { margin: 0; padding: 0; background: var(--surface); color: var(--fg); }
+    body {
+      font-family: 'Stilu', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-size: 16px; line-height: 1.7;
     }
 
-    html, body {
-      height: 100%;
-      background: var(--bg);
-      color: var(--text);
-      margin: 0;
-      font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    /* ── Top bar ── */
+    .top-bar {
+      position: sticky; top: 0; z-index: 10;
+      background: rgba(255,255,255,.88);
+      backdrop-filter: saturate(180%) blur(14px);
+      -webkit-backdrop-filter: saturate(180%) blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+    .top-bar-inner {
+      max-width: var(--maxw); margin: 0 auto; padding: 0 24px;
+      display: flex; align-items: center; justify-content: space-between; height: 56px;
+    }
+    .top-bar a { text-decoration: none; }
+    .back-link {
+      font-size: 14px; font-weight: 600; color: var(--brand);
+      display: inline-flex; align-items: center; gap: 6px;
+      transition: opacity .2s;
+    }
+    .back-link:hover { opacity: .7; }
+    .back-link svg { width: 16px; height: 16px; fill: currentColor; }
+    .brand-link { font-weight: 800; font-size: 18px; color: var(--fg); letter-spacing: -.02em; }
+
+    /* ── Layout ── */
+    .container { max-width: var(--maxw); margin: 0 auto; padding: 48px 24px 80px; }
+
+    /* ── Hero header ── */
+    .support-hero {
+      text-align: center; margin-bottom: 40px;
+    }
+    .support-hero h1 {
+      font-weight: 800; font-size: clamp(28px, 5vw, 40px);
+      letter-spacing: -.02em; margin: 0 0 8px;
+    }
+    .support-hero p {
+      font-size: 16px; color: var(--muted); margin: 0;
     }
 
-    .container {
-      max-width: 760px;
-      margin: 32px auto 96px;
-      padding: 0 20px;
-    }
-
+    /* ── Cards ── */
     .card {
-      background: var(--card);
+      background: var(--bg);
       border: 1px solid var(--border);
-      border-radius: 16px;
+      border-radius: var(--radius);
       padding: 28px;
-      box-shadow: 0 4px 18px rgba(0,0,0,0.05);
+      margin-bottom: 20px;
+      box-shadow: 0 2px 12px rgba(0,0,0,.04);
     }
-
-    h1 {
-      font-size: 28px;
-      margin: 0 0 10px;
+    .card h2 {
+      font-weight: 700; font-size: 18px; margin: 0 0 14px;
+      display: flex; align-items: center; gap: 10px;
     }
-
-    .subtitle {
-      color: var(--muted);
-      margin: 0 0 18px;
-      font-size: 14px;
+    .card h2 .icon {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 32px; height: 32px; border-radius: 10px;
+      background: var(--brand-light); color: var(--brand); flex-shrink: 0;
     }
+    .card h2 .icon svg { width: 18px; height: 18px; fill: currentColor; }
+    .card p { font-size: 15px; color: var(--fg); margin: 0 0 12px; line-height: 1.7; }
+    .card ul { padding-left: 20px; margin: 0; }
+    .card li { font-size: 14px; color: var(--muted); margin: 4px 0; }
 
-    hr {
-      border: 0;
-      height: 1px;
-      background: var(--border);
-      margin: 24px 0;
+    .email-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 10px 20px; border-radius: 999px;
+      background: var(--brand); color: #fff;
+      font-weight: 700; font-size: 14px;
+      text-decoration: none; margin-top: 8px;
+      transition: all .25s ease;
+      box-shadow: 0 4px 16px var(--brand-glow);
     }
-
-    h2 {
-      font-size: 18px;
-      margin: 22px 0 10px;
+    .email-link:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 24px var(--brand-glow);
     }
+    .email-link:active { transform: scale(.98); }
 
-    a {
-      color: var(--link);
-      text-decoration: none;
+    /* ── FAQ Accordion ── */
+    .faq-group { margin-bottom: 8px; }
+    .faq-group-title {
+      font-size: 13px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .08em; color: var(--brand); margin: 24px 0 12px;
     }
+    .faq-group-title:first-child { margin-top: 0; }
 
-    a:hover {
-      text-decoration: underline;
-    }
-
-    details summary {
-      cursor: pointer;
-      font-weight: 600;
-      margin: 8px 0;
-    }
-
-    details > details summary {
-      font-weight: 500;
-      margin-left: 1rem;
-    }
-
-    .footer {
-      color: var(--muted);
-      font-size: 14px;
-      margin-top: 18px;
-    }
-
-    .nav {
-      display: flex;
-      gap: 14px;
-      flex-wrap: wrap;
-      font-size: 14px;
-      margin-top: 4px;
-    }
-
-    .badge {
+    details.faq-item {
       border: 1px solid var(--border);
-      padding: 2px 8px;
-      border-radius: 999px;
-      font-size: 12px;
-      color: var(--muted);
+      border-radius: 12px;
+      margin-bottom: 8px;
+      background: var(--bg);
+      overflow: hidden;
+      transition: box-shadow .2s ease;
+    }
+    details.faq-item:hover {
+      box-shadow: 0 2px 12px rgba(148,37,255,.06);
+    }
+    details.faq-item[open] {
+      border-color: rgba(148,37,255,.2);
+      box-shadow: 0 2px 16px rgba(148,37,255,.08);
     }
 
-    .help-list a {
-      display: inline-block;
-      margin: 4px 0;
+    details.faq-item summary {
+      cursor: pointer;
+      padding: 14px 18px;
+      font-weight: 600; font-size: 15px; color: var(--fg);
+      list-style: none;
+      display: flex; align-items: center; justify-content: space-between;
+      -webkit-user-select: none; user-select: none;
+      transition: color .2s;
+    }
+    details.faq-item summary::-webkit-details-marker { display: none; }
+    details.faq-item summary::after {
+      content: '';
+      width: 8px; height: 8px; flex-shrink: 0;
+      border-right: 2px solid var(--muted);
+      border-bottom: 2px solid var(--muted);
+      transform: rotate(45deg);
+      transition: transform .25s ease, border-color .2s;
+      margin-left: 12px;
+    }
+    details.faq-item[open] summary::after {
+      transform: rotate(-135deg);
+      border-color: var(--brand);
+    }
+    details.faq-item[open] summary { color: var(--brand); }
+
+    details.faq-item .faq-answer {
+      padding: 0 18px 16px;
+      font-size: 14px; line-height: 1.7; color: var(--muted);
+    }
+    details.faq-item .faq-answer p { margin: 0; }
+
+    /* ── Policy links ── */
+    .policy-links {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+    }
+    .policy-link {
+      display: flex; align-items: center; justify-content: center;
+      padding: 14px 16px;
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 12px;
+      font-size: 14px; font-weight: 600; color: var(--fg);
+      text-decoration: none;
+      transition: all .2s ease;
+    }
+    .policy-link:hover {
+      border-color: var(--brand);
+      color: var(--brand);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(148,37,255,.08);
     }
 
-    .spacer { height: 4px; }
+    /* ── Footer ── */
+    .page-footer {
+      margin-top: 40px; padding-top: 20px;
+      border-top: 1px solid var(--border);
+      font-size: 13px; color: var(--faint); text-align: center;
+    }
+
+    a { color: var(--brand); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    @media (max-width: 600px) {
+      .container { padding: 32px 18px 60px; }
+      .top-bar-inner { padding: 0 18px; }
+      .policy-links { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
-  <main class="container">
-    <article class="card" role="article" aria-labelledby="title">
-      <header>
-        <h1 id="title">Support</h1>
-        <p class="subtitle">Help Center • Contact • FAQs</p>
-        <nav class="nav" aria-label="Quick links">
-          <a href="index.html">← Back to Home</a>
-          <span class="badge">YAPP</span>
-        </nav>
-      </header>
+  <div class="top-bar">
+    <div class="top-bar-inner">
+      <a href="/" class="back-link">
+        <svg viewBox="0 0 20 20"><path d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"/></svg>
+        Home
+      </a>
+      <a href="/" class="brand-link">YAPP</a>
+    </div>
+  </div>
 
-      <hr>
+  <div class="container">
+    <div class="support-hero">
+      <h1>How can we help?</h1>
+      <p>Find answers below or reach out directly.</p>
+    </div>
 
-      <section aria-labelledby="contact">
-        <h2 id="contact">Contact Us</h2>
-        <p>Need help with the app, billing, or your account? Email us and we’ll get back to you as soon as possible.</p>
-        <p><strong>Email:</strong> <a href="mailto:support@yapp.app">support@yapp.app</a></p>
-        <ul>
-          <li>Your device model and iOS version</li>
-          <li>Steps to reproduce the issue (if it’s a bug)</li>
-          <li>Screenshots or a short screen recording, if possible</li>
-        </ul>
-      </section>
+    <!-- Contact -->
+    <div class="card">
+      <h2>
+        <span class="icon">
+          <svg viewBox="0 0 20 20"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/></svg>
+        </span>
+        Contact Us
+      </h2>
+      <p>Need help with the app, billing, or your account? Email us and we'll get back to you as soon as possible.</p>
+      <p>When reaching out, please include:</p>
+      <ul>
+        <li>Your device model and iOS version</li>
+        <li>Steps to reproduce the issue (if it's a bug)</li>
+        <li>Screenshots or a short screen recording, if possible</li>
+      </ul>
+      <br />
+      <a href="mailto:support@yappculture.com" class="email-link">
+        Email Support
+        <svg viewBox="0 0 20 20" width="14" height="14" fill="currentColor"><path d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"/></svg>
+      </a>
+    </div>
 
-      <section aria-labelledby="faq">
-        <h2 id="faq">FAQs</h2>
+    <!-- FAQs -->
+    <div class="card">
+      <h2>
+        <span class="icon">
+          <svg viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"/></svg>
+        </span>
+        Frequently Asked Questions
+      </h2>
 
-        <!-- GETTING STARTED -->
-        <details>
-          <summary><strong>GETTING STARTED</strong></summary>
-          <details>
-            <summary>How do I add friends?</summary>
-            <p>You can add friends by tapping the “Add from Contacts” button in the Friends view, or by sharing your YAPP profile link with them.</p>
-          </details>
-          <details>
-            <summary>How do I update my profile?</summary>
-            <p>Go to <em>Settings → Edit Profile</em> to update your name, profile photo, and other personal information.</p>
-          </details>
-          <details>
-            <summary>How do I update my status?</summary>
-            <p>Tap on your profile image in the Friends view and select “Add a Note” to update your status with a custom message.</p>
-          </details>
-        </details>
+      <div class="faq-group-title">Getting Started</div>
 
-        <!-- YAPPING & CONNECTING -->
-        <details>
-          <summary><strong>YAPPING &amp; CONNECTING</strong></summary>
-          <details>
-            <summary>What is yapping?</summary>
-            <p>“Yapping” is our way of saying chatting or talking—it’s how you communicate with your friends on YAPP.</p>
-          </details>
-          <details>
-            <summary>How do I send a yap?</summary>
-            <p>Tap on a friend’s profile to open their detail view, then tap “Send Yap” to start a conversation.</p>
-          </details>
-          <details>
-            <summary>What is 6&deg; Yappers?</summary>
-            <p>6&deg; Yappers shows you friends-of-friends—people you might know through mutual connections.</p>
-          </details>
-          <details>
-            <summary>What does “Too far to yap” mean?</summary>
-            <p>It means the person is outside your yapping range. You can only yap with people who are nearby.</p>
-          </details>
-          <details>
-            <summary>How do I send a wave?</summary>
-            <p>Tap on a friend’s profile and select “Send Wave” to let them know you’re thinking of them.</p>
-          </details>
-        </details>
+      <details class="faq-item">
+        <summary>How do I add friends?</summary>
+        <div class="faq-answer"><p>You can add friends by tapping the "Add from Contacts" button in the Friends view, or by sharing your YAPP profile link with them.</p></div>
+      </details>
+      <details class="faq-item">
+        <summary>How do I update my profile?</summary>
+        <div class="faq-answer"><p>Go to Settings &rarr; Edit Profile to update your name, profile photo, and other personal information.</p></div>
+      </details>
+      <details class="faq-item">
+        <summary>How do I update my status?</summary>
+        <div class="faq-answer"><p>Tap on your profile image in the Friends view and select "Add a Note" to update your status with a custom message.</p></div>
+      </details>
 
-        <!-- PRIVACY & SAFETY -->
-        <details>
-          <summary><strong>PRIVACY &amp; SAFETY</strong></summary>
-          <details>
-            <summary>Is my location shared?</summary>
-            <p>Your exact location is never shared. We only share your estimated proximity and show that you’re “nearby” to other users.</p>
-          </details>
-          <details>
-            <summary>Can I control who sees me?</summary>
-            <p>Yes. You can block users and control your visibility in Settings.</p>
-          </details>
-          <details>
-            <summary>How do I report someone?</summary>
-            <p>Tap on their profile and select “Report” to report inappropriate behavior.</p>
-          </details>
-        </details>
+      <div class="faq-group-title">Yapping & Connecting</div>
 
-        <!-- TROUBLESHOOTING -->
-        <details>
-          <summary><strong>TROUBLESHOOTING</strong></summary>
-          <details>
-            <summary>The app is not working</summary>
-            <p>Try closing and reopening the app, or restart your device. Make sure you have a stable internet connection.</p>
-          </details>
-          <details>
-            <summary>I can’t find nearby friends</summary>
-            <p>Make sure Location Services are enabled for YAPP.</p>
-          </details>
-        </details>
-      </section>
+      <details class="faq-item">
+        <summary>What is yapping?</summary>
+        <div class="faq-answer"><p>"Yapping" is our way of saying chatting or talking — it's how you communicate with your friends on YAPP.</p></div>
+      </details>
+      <details class="faq-item">
+        <summary>How do I send a yap?</summary>
+        <div class="faq-answer"><p>Tap on a friend's profile to open their detail view, then tap "Send Yap" to start a conversation.</p></div>
+      </details>
+      <details class="faq-item">
+        <summary>What is 6&deg; Yappers?</summary>
+        <div class="faq-answer"><p>6&deg; Yappers shows you friends-of-friends — people you might know through mutual connections.</p></div>
+      </details>
+      <details class="faq-item">
+        <summary>What does "Too far to yap" mean?</summary>
+        <div class="faq-answer"><p>It means the person is outside your yapping range. You can only yap with people who are nearby.</p></div>
+      </details>
+      <details class="faq-item">
+        <summary>How do I send a wave?</summary>
+        <div class="faq-answer"><p>Tap on a friend's profile and select "Send Wave" to let them know you're thinking of them.</p></div>
+      </details>
 
-      <section aria-labelledby="policies">
-        <h2 id="policies">Policies</h2>
-        <p class="help-list">
-          <a href="EULA.html">End-User License Agreement (EULA)</a><br>
-          <a href="TermsOfService.html">Terms of Service</a><br>
-          <a href="PrivacyPolicy.html">Privacy Policy</a>
-        </p>
-      </section>
+      <div class="faq-group-title">Privacy & Safety</div>
 
-      <hr>
+      <details class="faq-item">
+        <summary>Is my location shared?</summary>
+        <div class="faq-answer"><p>Your exact location is never shared. We only share your estimated proximity and show that you're "nearby" to other users.</p></div>
+      </details>
+      <details class="faq-item">
+        <summary>Can I control who sees me?</summary>
+        <div class="faq-answer"><p>Yes. You can block users and control your visibility in Settings.</p></div>
+      </details>
+      <details class="faq-item">
+        <summary>How do I report someone?</summary>
+        <div class="faq-answer"><p>Tap on their profile and select "Report" to report inappropriate behavior.</p></div>
+      </details>
 
-      <footer class="footer">
-        <div>© 2025 YAPP</div>
-        <div>Last updated: Oct 20, 2025</div>
-      </footer>
-    </article>
-  </main>
+      <div class="faq-group-title">Troubleshooting</div>
+
+      <details class="faq-item">
+        <summary>The app is not working</summary>
+        <div class="faq-answer"><p>Try closing and reopening the app, or restart your device. Make sure you have a stable internet connection.</p></div>
+      </details>
+      <details class="faq-item">
+        <summary>I can't find nearby friends</summary>
+        <div class="faq-answer"><p>Make sure Location Services are enabled for YAPP in your device settings.</p></div>
+      </details>
+    </div>
+
+    <!-- Policies -->
+    <div class="card">
+      <h2>
+        <span class="icon">
+          <svg viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd"/></svg>
+        </span>
+        Policies
+      </h2>
+      <div class="policy-links">
+        <a href="EULA.html" class="policy-link">EULA</a>
+        <a href="TermsOfService.html" class="policy-link">Terms of Service</a>
+        <a href="PrivacyPolicy.html" class="policy-link">Privacy Policy</a>
+      </div>
+    </div>
+
+    <footer class="page-footer">
+      <p>&copy; 2025 YAPP &middot; Last updated: Oct 20, 2025</p>
+    </footer>
+  </div>
 </body>
 </html>

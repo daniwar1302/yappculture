@@ -8,99 +8,494 @@
   <link href="https://fonts.cdnfonts.com/css/stilu" rel="stylesheet" />
 
   <style>
-    :root{
-      --bg:#ffffff; --fg:#000000;
-      --link:#555; --link-hover:#000;
-      --brand:#9425FF;
+    :root {
+      --bg: #ffffff;
+      --fg: #000000;
+      --link: #777;
+      --link-hover: #000;
+      --brand: #9425FF;
+      --brand-glow: rgba(148, 37, 255, 0.25);
     }
 
-    /* Base layout */
-    html,body{margin:0; padding:0; background:var(--bg); color:var(--fg);
-      font-family:'Stilu', -apple-system, BlinkMacSystemFont,"Segoe UI", Roboto, Helvetica, Arial, sans-serif;}
-    body{display:flex; min-height:100vh; flex-direction:column;}
+    *, *::before, *::after { box-sizing: border-box; }
 
-    /* Header */
-    .site-header{
-      position:sticky; top:0; z-index:10;
-      backdrop-filter:saturate(180%) blur(8px);
-      background:rgba(255,255,255,.8);
-      border-bottom:1px solid #eee;
+    html, body {
+      margin: 0; padding: 0;
+      background: var(--bg); color: var(--fg);
+      font-family: 'Stilu', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
-    .container{max-width:1100px; margin:0 auto; padding:0 20px;}
-    .nav{display:flex; align-items:center; justify-content:space-between; height:64px;}
-    .brand{display:flex; align-items:center; gap:.6rem; font-weight:800; letter-spacing:-.02em;}
-    .brand img{height:28px; width:28px}
-    .brand a{color:inherit; text-decoration:none; font-size:20px}
-
-    .cta{
-      display:inline-flex; align-items:center; justify-content:center;
-      height:40px; padding:0 16px; border-radius:999px;
-      font-weight:700; text-decoration:none; border:1.5px solid var(--brand);
-      color:#fff; background:var(--brand);
-      transition:transform .06s ease, box-shadow .2s ease, opacity .2s ease;
+    body {
+      display: flex; min-height: 100vh; flex-direction: column;
+      overflow-x: hidden;
     }
-    .cta:hover{transform:translateY(-1px); box-shadow:0 6px 16px rgba(148,37,255,.18)}
-    .cta:active{transform:translateY(0)}
 
-    /* Hero */
-    main{flex:1; display:block}
-    .hero{padding:72px 0}
-    .hero .container{display:grid; grid-template-columns:1fr; gap:16px}
-    h1{font-weight:800; font-size:clamp(28px,6vw,56px); margin:0 0 .2em; letter-spacing:-.02em;}
-    h2{font-weight:500; font-size:clamp(18px,3vw,28px); margin:.2em 0 1em; color:#222}
-    p{max-width:680px; font-size:clamp(16px,2.2vw,20px); line-height:1.6; margin:.4em 0; color:#111}
+    /* ── Header ── */
+    .site-header {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: transparent;
+      border-bottom: 1px solid transparent;
+      transition: background .4s ease, border-color .4s ease, box-shadow .4s ease;
+    }
+    .site-header.scrolled {
+      background: rgba(255, 255, 255, .92);
+      backdrop-filter: saturate(180%) blur(12px);
+      -webkit-backdrop-filter: saturate(180%) blur(12px);
+      border-bottom-color: #eee;
+      box-shadow: 0 1px 8px rgba(0,0,0,.06);
+    }
+    .site-header.scrolled .brand a { color: var(--fg); }
+    .site-header.scrolled .nav-cta {
+      color: #fff; background: var(--brand); border-color: var(--brand);
+    }
 
-    /* Left alignment like the reference */
-    .hero *{text-align:left}
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+    .nav {
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px;
+    }
+    .brand {
+      display: flex; align-items: center; gap: .6rem;
+      font-weight: 800; letter-spacing: -.02em;
+    }
+    .brand a {
+      color: #fff; text-decoration: none; font-size: 22px;
+      transition: color .4s ease;
+    }
 
-    footer{margin:40px 0; font-size:14px; color:var(--link); text-align:center}
-    footer a{color:var(--link); text-decoration:none; margin:0 8px}
-    footer a:hover{color:var(--link-hover)}
+    .nav-cta {
+      display: inline-flex; align-items: center; justify-content: center;
+      height: 40px; padding: 0 20px; border-radius: 999px;
+      font-weight: 700; font-size: 14px; text-decoration: none;
+      border: 1.5px solid rgba(255,255,255,.6);
+      color: #fff; background: transparent;
+      transition: all .3s ease;
+    }
+    .nav-cta:hover {
+      background: #fff; color: var(--brand); border-color: #fff;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(0,0,0,.15);
+    }
+    .nav-cta:active { transform: scale(.97); }
+    .site-header.scrolled .nav-cta:hover {
+      background: var(--brand); color: #fff;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px var(--brand-glow);
+    }
 
-    /* Mobile tweaks */
-    @media (max-width:600px){
-      .nav{height:56px}
-      .brand a{font-size:18px}
-      .cta{height:38px; padding:0 14px}
-      .hero{padding:56px 0}
+    /* ── Hero (fullscreen video) ── */
+    main { flex: 1; }
+
+    .hero {
+      position: relative;
+      width: 100%; height: 100vh; min-height: 600px;
+      overflow: hidden;
+      display: flex; align-items: center;
+      background: #0a0a0a;
+    }
+
+    .hero-video {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      z-index: 0;
+      opacity: 0;
+      transition: opacity 1.2s ease;
+    }
+    .hero-video.loaded { opacity: 1; }
+
+    .hero-fallback {
+      position: absolute; inset: 0; z-index: 0;
+      background: linear-gradient(135deg, #1a0533 0%, #0d0d1a 40%, #0a0a0a 100%);
+    }
+
+    .hero-overlay {
+      position: absolute; inset: 0; z-index: 1;
+      background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,.45) 0%,
+        rgba(0,0,0,.25) 50%,
+        rgba(0,0,0,.55) 100%
+      );
+    }
+
+    .hero-content {
+      position: relative; z-index: 2;
+      max-width: 720px;
+    }
+
+    .hero h1 {
+      font-weight: 800; font-size: clamp(32px, 7vw, 64px);
+      letter-spacing: -.03em; line-height: 1.05;
+      margin: 0 0 .15em; color: #fff;
+      opacity: 0; transform: translateY(24px);
+    }
+    .hero h2 {
+      font-weight: 400; font-size: clamp(18px, 3vw, 28px);
+      color: rgba(255,255,255,.8);
+      margin: 0 0 1.4em;
+      opacity: 0; transform: translateY(24px);
+    }
+    .hero-cta-row {
+      display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+      opacity: 0; transform: translateY(24px);
+    }
+
+    .hero-cta {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      height: 52px; padding: 0 28px; border-radius: 999px;
+      font-weight: 700; font-size: 16px; text-decoration: none;
+      color: #fff; background: var(--brand);
+      border: none; cursor: pointer;
+      transition: all .25s ease;
+      box-shadow: 0 4px 24px var(--brand-glow);
+    }
+    .hero-cta:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 8px 32px var(--brand-glow);
+    }
+    .hero-cta:active { transform: scale(.98); }
+    .hero-cta svg {
+      width: 18px; height: 18px; fill: currentColor;
+      transition: transform .25s ease;
+    }
+    .hero-cta:hover svg { transform: translateX(3px); }
+
+    .hero-sub {
+      font-size: 14px; color: rgba(255,255,255,.5);
+      letter-spacing: .02em;
+    }
+
+    .scroll-hint {
+      position: absolute; bottom: 32px; left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      color: rgba(255,255,255,.45);
+      font-size: 12px; letter-spacing: .08em; text-transform: uppercase;
+      opacity: 0;
+      animation: fadeInHint 1s ease 2.4s forwards;
+    }
+    .scroll-hint .chevron {
+      width: 20px; height: 20px;
+      border-right: 2px solid rgba(255,255,255,.4);
+      border-bottom: 2px solid rgba(255,255,255,.4);
+      transform: rotate(45deg);
+      animation: bounceChevron 2s ease infinite;
+    }
+
+    /* ── Entrance animations ── */
+    .hero.entered h1       { opacity: 1; transform: translateY(0); transition: opacity .7s ease .3s, transform .7s ease .3s; }
+    .hero.entered h2       { opacity: 1; transform: translateY(0); transition: opacity .7s ease .55s, transform .7s ease .55s; }
+    .hero.entered .hero-cta-row { opacity: 1; transform: translateY(0); transition: opacity .7s ease .8s, transform .7s ease .8s; }
+
+    @keyframes fadeInHint {
+      to { opacity: 1; }
+    }
+    @keyframes bounceChevron {
+      0%, 100% { transform: rotate(45deg) translateY(0); }
+      50% { transform: rotate(45deg) translateY(6px); }
+    }
+
+    /* ── About section ── */
+    .about {
+      padding: 100px 0 80px;
+      background: var(--bg);
+    }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+    .about-label {
+      font-size: 12px; font-weight: 700; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--brand);
+      margin: 0 0 16px;
+    }
+    .about-heading {
+      font-weight: 800; font-size: clamp(24px, 4vw, 40px);
+      letter-spacing: -.02em; line-height: 1.15;
+      margin: 0 0 24px; color: var(--fg);
+    }
+    .about p {
+      font-size: clamp(16px, 2vw, 19px); line-height: 1.7;
+      color: #444; margin: 0 0 20px; max-width: 540px;
+    }
+
+    /* ── How it works ── */
+    .how-it-works {
+      padding: 80px 0 100px;
+      background: #faf9fc;
+    }
+    .section-label {
+      font-size: 12px; font-weight: 700; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--brand);
+      margin: 0 0 12px; text-align: center;
+    }
+    .section-heading {
+      font-weight: 800; font-size: clamp(24px, 4vw, 40px);
+      letter-spacing: -.02em; text-align: center;
+      margin: 0 0 56px; color: var(--fg);
+    }
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+    .step-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 36px 28px;
+      border: 1px solid #eee;
+      transition: transform .3s ease, box-shadow .3s ease;
+    }
+    .step-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(148, 37, 255, .08);
+    }
+    .step-num {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 40px; height: 40px; border-radius: 12px;
+      background: var(--brand); color: #fff;
+      font-weight: 800; font-size: 16px;
+      margin-bottom: 20px;
+    }
+    .step-card h3 {
+      font-weight: 700; font-size: 20px;
+      margin: 0 0 10px; color: var(--fg);
+    }
+    .step-card p {
+      font-size: 15px; line-height: 1.6;
+      color: #666; margin: 0;
+    }
+
+    /* ── Bottom CTA banner ── */
+    .bottom-cta {
+      padding: 80px 0;
+      text-align: center;
+      background: linear-gradient(135deg, #1a0533 0%, #2d0a5e 50%, #4a0e8f 100%);
+      color: #fff;
+    }
+    .bottom-cta h2 {
+      font-weight: 800; font-size: clamp(24px, 5vw, 44px);
+      letter-spacing: -.02em; margin: 0 0 12px;
+    }
+    .bottom-cta p {
+      font-size: clamp(16px, 2vw, 20px); color: rgba(255,255,255,.7);
+      margin: 0 0 32px; max-width: 480px; margin-left: auto; margin-right: auto;
+    }
+    .bottom-cta .hero-cta {
+      font-size: 17px; height: 54px; padding: 0 32px;
+    }
+
+    /* ── Scroll reveal ── */
+    .reveal {
+      opacity: 0; transform: translateY(32px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+    .reveal.visible {
+      opacity: 1; transform: translateY(0);
+    }
+    .reveal-stagger-1 { transition-delay: .1s; }
+    .reveal-stagger-2 { transition-delay: .2s; }
+    .reveal-stagger-3 { transition-delay: .3s; }
+
+    /* ── Footer ── */
+    footer {
+      padding: 40px 24px;
+      font-size: 14px; color: var(--link); text-align: center;
+      border-top: 1px solid #eee;
+    }
+    footer a {
+      color: var(--link); text-decoration: none; margin: 0 8px;
+      transition: color .2s ease;
+    }
+    footer a:hover { color: var(--link-hover); }
+    footer .copy { margin-bottom: 10px; }
+
+    /* ── Reduced motion ── */
+    @media (prefers-reduced-motion: reduce) {
+      .hero h1, .hero h2, .hero-cta-row { opacity: 1; transform: none; transition: none; }
+      .reveal { opacity: 1; transform: none; transition: none; }
+      .scroll-hint { animation: none; opacity: 1; }
+      .chevron { animation: none !important; }
+      .hero-video { display: none; }
+      .hero-fallback {
+        background: linear-gradient(135deg, #1a0533 0%, #0d0d1a 40%, #0a0a0a 100%);
+      }
+    }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .nav { height: 56px; }
+      .brand a { font-size: 18px; }
+      .nav-cta { height: 36px; padding: 0 14px; font-size: 13px; }
+      .hero { min-height: 520px; }
+      .hero-cta { height: 48px; padding: 0 24px; font-size: 15px; }
+      .about-grid { grid-template-columns: 1fr; gap: 24px; }
+      .steps { grid-template-columns: 1fr; gap: 20px; }
+      .scroll-hint { bottom: 24px; }
     }
   </style>
 </head>
 <body>
-  <!-- Header -->
+
+  <!-- Header (transparent over hero, solid on scroll) -->
   <header class="site-header">
     <div class="container">
       <nav class="nav" aria-label="Primary">
         <div class="brand">
           <a href="/">YAPP</a>
         </div>
-        <a class="cta" href="https://apps.apple.com/us/app/yapp-for-yappers-by-yappers/id6753838216">
-          Get the App on iOS
+        <a class="nav-cta" href="https://apps.apple.com/us/app/yapp-for-yappers-by-yappers/id6753838216">
+          Get the App
         </a>
       </nav>
     </div>
   </header>
 
-  <!-- Hero -->
   <main>
-    <section class="hero">
-      <div class="container">
-        <h1>For Yappers, By Yappers</h1>
+    <!-- ── Hero with background video ── -->
+    <section class="hero" id="hero">
+      <div class="hero-fallback"></div>
+      <video
+        class="hero-video"
+        autoplay muted loop playsinline
+        preload="auto"
+        poster="hero-poster.jpg"
+      >
+        <source src="hero-bg.mp4"  type="video/mp4" />
+        <source src="hero-bg.webm" type="video/webm" />
+      </video>
+      <div class="hero-overlay"></div>
+
+      <div class="hero-content container">
+        <h1>For Yappers,<br>By Yappers</h1>
         <h2>Right People, Place, and Time.</h2>
-        <p>YAPP is for the yappers out there who love staying connected — whether your friends are nearby or across the world. We help you spend more time actually hanging out by showing you what your friends are up to when it matters most. See who's free, send instant invites to your favorite spots, and meet up spontaneously — no overthinking, no planning fatigue.</p>
-        <p>Ditch the endless scheduling and calendar chaos — because friendship shouldn’t feel like a meeting invite.</p>
+        <div class="hero-cta-row">
+          <a class="hero-cta" href="https://apps.apple.com/us/app/yapp-for-yappers-by-yappers/id6753838216">
+            Download Free
+            <svg viewBox="0 0 20 20"><path d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"/></svg>
+          </a>
+          <span class="hero-sub">Available on iOS</span>
+        </div>
+      </div>
+
+      <div class="scroll-hint">
+        <span>Scroll</span>
+        <div class="chevron"></div>
+      </div>
+    </section>
+
+    <!-- ── About ── -->
+    <section class="about">
+      <div class="container">
+        <div class="about-grid">
+          <div>
+            <div class="about-label reveal">What is YAPP?</div>
+            <h2 class="about-heading reveal reveal-stagger-1">Stop planning.<br>Start hanging out.</h2>
+          </div>
+          <div>
+            <p class="reveal reveal-stagger-1">YAPP is for the yappers out there who love staying connected — whether your friends are nearby or across the world. We help you spend more time actually hanging out by showing you what your friends are up to when it matters most.</p>
+            <p class="reveal reveal-stagger-2">See who's free, send instant invites to your favorite spots, and meet up spontaneously — no overthinking, no planning fatigue.</p>
+            <p class="reveal reveal-stagger-3">Ditch the endless scheduling and calendar chaos — because friendship shouldn't feel like a meeting invite.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── How it works ── -->
+    <section class="how-it-works">
+      <div class="container">
+        <div class="section-label reveal">How It Works</div>
+        <h2 class="section-heading reveal reveal-stagger-1">Three taps to a hangout</h2>
+        <div class="steps">
+          <div class="step-card reveal reveal-stagger-1">
+            <div class="step-num">1</div>
+            <h3>See who's free</h3>
+            <p>Open YAPP and instantly see which friends are available right now — no awkward "wyd?" texts needed.</p>
+          </div>
+          <div class="step-card reveal reveal-stagger-2">
+            <div class="step-num">2</div>
+            <h3>Send an invite</h3>
+            <p>Pick a spot, tap invite, done. Your friends get a quick ping with everything they need to show up.</p>
+          </div>
+          <div class="step-card reveal reveal-stagger-3">
+            <div class="step-num">3</div>
+            <h3>Meet up</h3>
+            <p>Skip the back-and-forth. Less planning, more laughing — that's the whole point.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Bottom CTA ── -->
+    <section class="bottom-cta">
+      <div class="container reveal">
+        <h2>Your friends are waiting</h2>
+        <p>Join the community of yappers who chose hanging out over planning.</p>
+        <a class="hero-cta" href="https://apps.apple.com/us/app/yapp-for-yappers-by-yappers/id6753838216">
+          Get YAPP — It's Free
+          <svg viewBox="0 0 20 20"><path d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"/></svg>
+        </a>
       </div>
     </section>
   </main>
 
   <footer>
-    <div>© 2025 YAPP</div>
+    <div class="copy">&copy; 2025 YAPP</div>
     <div>
-      <a href="EULA.html">EULA</a> •
-      <a href="TermsOfService.html">Terms Of Service</a> •
-      <a href="PrivacyPolicy.html">Privacy Policy</a> •
+      <a href="EULA.html">EULA</a> &middot;
+      <a href="TermsOfService.html">Terms Of Service</a> &middot;
+      <a href="PrivacyPolicy.html">Privacy Policy</a> &middot;
       <a href="Support.html">Support</a>
     </div>
   </footer>
+
+  <script>
+    (function () {
+      /* Header: transparent → solid on scroll */
+      const header = document.querySelector('.site-header');
+      const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 60);
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+
+      /* Hero entrance sequence */
+      const hero = document.getElementById('hero');
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => hero.classList.add('entered'));
+      });
+
+      /* Video fade-in when ready */
+      const video = document.querySelector('.hero-video');
+      if (video) {
+        const show = () => video.classList.add('loaded');
+        if (video.readyState >= 3) show();
+        else video.addEventListener('canplay', show, { once: true });
+      }
+
+      /* Scroll-reveal (Intersection Observer) */
+      const reveals = document.querySelectorAll('.reveal');
+      if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+        }, { threshold: 0.15 });
+        reveals.forEach(el => io.observe(el));
+      } else {
+        reveals.forEach(el => el.classList.add('visible'));
+      }
+
+      /* Hide scroll hint once user scrolls */
+      const hint = document.querySelector('.scroll-hint');
+      if (hint) {
+        const hideHint = () => {
+          if (window.scrollY > 100) { hint.style.opacity = '0'; hint.style.transition = 'opacity .4s ease'; }
+          else { hint.style.opacity = ''; }
+        };
+        window.addEventListener('scroll', hideHint, { passive: true });
+      }
+    })();
+  </script>
 </body>
 </html>

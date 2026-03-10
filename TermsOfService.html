@@ -3,42 +3,130 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Terms of Service — YAPP: For Yappers, By Yappers</title>
+  <title>Terms of Service — YAPP</title>
   <meta name="description" content="Terms of Service for YAPP: For Yappers, By Yappers." />
+  <link rel="icon" type="image/png" href="YAPP-3.png" />
+  <link href="https://fonts.cdnfonts.com/css/stilu" rel="stylesheet" />
   <style>
-    :root{--maxw:900px;--text:#111;--muted:#555;--border:#e5e7eb;--link:#2563eb;--bg:#fff;--accent:#f8fafc}
-    html,body{background:var(--bg);color:var(--text)}
-    body{margin:0;font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji"}
-    .container{max-width:var(--maxw);margin:0 auto;padding:32px 20px 64px}
-    header{padding:16px 0;border-bottom:1px solid var(--border);margin-bottom:20px}
-    h1{margin:0 0 6px;font-size:2rem;line-height:1.2}
-    .meta,.small{color:var(--muted);font-size:.95rem}
-    .pill{display:inline-block;border:1px solid var(--border);background:var(--accent);border-radius:999px;padding:2px 10px;margin-right:6px;font-size:.8rem}
-    nav.toc{background:var(--accent);border:1px solid var(--border);border-radius:12px;padding:14px;margin:18px 0 24px}
-    nav.toc h2{margin:0 0 6px;font-size:1rem}
-    nav.toc ol{margin:0;padding-left:18px}
-    section{margin:26px 0}
-    h2{font-size:1.25rem;margin:0 0 8px}
-    ul{padding-left:20px}
-    a{color:var(--link);text-decoration:none}
-    a:hover,a:focus{text-decoration:underline}
-    footer{border-top:1px solid var(--border);margin-top:40px;padding-top:16px}
-    .note{background:#fff8db;border:1px solid #fde68a;padding:10px 12px;border-radius:10px}
-    code{background:#f3f4f6;padding:0 4px;border-radius:4px}
+    :root {
+      --bg: #ffffff; --fg: #0a0a0a; --muted: #666; --faint: #999;
+      --border: #e8e8e8; --surface: #f7f6fa; --brand: #9425FF;
+      --brand-light: rgba(148,37,255,.07); --brand-glow: rgba(148,37,255,.18);
+      --maxw: 720px; --radius: 14px;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    html, body { margin: 0; padding: 0; background: var(--bg); color: var(--fg); }
+    body {
+      font-family: 'Stilu', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-size: 16px; line-height: 1.7;
+    }
+
+    .top-bar {
+      position: sticky; top: 0; z-index: 10;
+      background: rgba(255,255,255,.88);
+      backdrop-filter: saturate(180%) blur(14px);
+      -webkit-backdrop-filter: saturate(180%) blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+    .top-bar-inner {
+      max-width: var(--maxw); margin: 0 auto; padding: 0 24px;
+      display: flex; align-items: center; justify-content: space-between; height: 56px;
+    }
+    .top-bar a { text-decoration: none; }
+    .back-link {
+      font-size: 14px; font-weight: 600; color: var(--brand);
+      display: inline-flex; align-items: center; gap: 6px;
+      transition: opacity .2s;
+    }
+    .back-link:hover { opacity: .7; }
+    .back-link svg { width: 16px; height: 16px; fill: currentColor; }
+    .brand-link { font-weight: 800; font-size: 18px; color: var(--fg); letter-spacing: -.02em; }
+
+    .container { max-width: var(--maxw); margin: 0 auto; padding: 48px 24px 80px; }
+
+    .page-header { margin-bottom: 36px; }
+    .page-header h1 {
+      font-weight: 800; font-size: clamp(26px, 5vw, 36px);
+      letter-spacing: -.02em; margin: 0 0 12px; line-height: 1.15;
+    }
+    .meta-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .pill {
+      display: inline-flex; align-items: center;
+      padding: 4px 12px; border-radius: 999px;
+      font-size: 12px; font-weight: 600;
+      background: var(--brand-light); color: var(--brand);
+      border: 1px solid rgba(148,37,255,.12);
+    }
+    .meta-text { font-size: 14px; color: var(--muted); line-height: 1.7; }
+    .meta-text a { color: var(--brand); text-decoration: none; }
+    .meta-text a:hover { text-decoration: underline; }
+
+    .toc {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 20px 24px; margin-bottom: 40px;
+    }
+    .toc h2 { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin: 0 0 12px; }
+    .toc ol { margin: 0; padding-left: 20px; }
+    .toc li { margin: 4px 0; }
+    .toc a {
+      color: var(--fg); text-decoration: none; font-size: 14px; font-weight: 500;
+      transition: color .2s;
+    }
+    .toc a:hover { color: var(--brand); }
+
+    section { margin: 32px 0; padding-top: 8px; }
+    section h2 {
+      font-weight: 700; font-size: 18px; margin: 0 0 10px;
+      padding-bottom: 8px; border-bottom: 2px solid var(--brand-light);
+    }
+    section p, section li { color: var(--fg); font-size: 15px; line-height: 1.75; }
+    section ul { padding-left: 20px; }
+    section li { margin: 4px 0; }
+    a { color: var(--brand); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    strong { font-weight: 700; }
+
+    .callout {
+      background: #fffbeb; border-left: 3px solid #f59e0b;
+      padding: 14px 16px; border-radius: 0 var(--radius) var(--radius) 0;
+      font-size: 14px; line-height: 1.65; color: #92400e; margin-top: 12px;
+    }
+
+    .page-footer {
+      margin-top: 48px; padding-top: 20px;
+      border-top: 1px solid var(--border);
+      font-size: 13px; color: var(--faint); text-align: center;
+    }
+
+    @media (max-width: 600px) {
+      .container { padding: 32px 18px 60px; }
+      .top-bar-inner { padding: 0 18px; }
+    }
   </style>
 </head>
 <body>
+  <div class="top-bar">
+    <div class="top-bar-inner">
+      <a href="/" class="back-link">
+        <svg viewBox="0 0 20 20"><path d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"/></svg>
+        Home
+      </a>
+      <a href="/" class="brand-link">YAPP</a>
+    </div>
+  </div>
+
   <div class="container">
-    <header>
+    <header class="page-header">
       <h1>Terms of Service</h1>
-      <p class="meta">
+      <div class="meta-row">
         <span class="pill">YAPP: For Yappers, By Yappers</span>
         <span class="pill">United States — California</span>
-      </p>
-      <p class="meta">
-        <strong>Developer:</strong> Daniela Guerra Mira (Individual Developer) •
+      </div>
+      <p class="meta-text">
+        <strong>Developer:</strong> Daniela Guerra Mira (Individual Developer)<br />
         <strong>Contact:</strong> <a href="mailto:support@yappculture.com">support@yappculture.com</a><br />
-        <strong>Last Updated:</strong> <em>October 14, 2025</em>
+        <strong>Last Updated:</strong> October 14, 2025
       </p>
     </header>
 
@@ -66,7 +154,7 @@
 
     <section id="acceptance">
       <h2>1. Acceptance of Terms</h2>
-      <p>These Terms of Service (“Terms”) govern your access to and use of <strong>YAPP: For Yappers, By Yappers</strong> (the “Service”). By accessing or using the Service, you agree to be bound by these Terms. If you do not agree, do not use the Service.</p>
+      <p>These Terms of Service ("Terms") govern your access to and use of <strong>YAPP: For Yappers, By Yappers</strong> (the "Service"). By accessing or using the Service, you agree to be bound by these Terms. If you do not agree, do not use the Service.</p>
     </section>
 
     <section id="eligibility">
@@ -85,7 +173,7 @@
 
     <section id="ugc">
       <h2>4. User Content & License</h2>
-      <p>The Service allows users to create text and upload images (“<strong>User Content</strong>”). You retain ownership of your User Content. You grant us a <strong>worldwide, non-exclusive, royalty-free, sublicensable, and transferable license</strong> to host, store, reproduce, modify, adapt, publish, display, and distribute your User Content for the purpose of operating, improving, and promoting the Service.</p>
+      <p>The Service allows users to create text and upload images ("<strong>User Content</strong>"). You retain ownership of your User Content. You grant us a <strong>worldwide, non-exclusive, royalty-free, sublicensable, and transferable license</strong> to host, store, reproduce, modify, adapt, publish, display, and distribute your User Content for the purpose of operating, improving, and promoting the Service.</p>
       <p><strong>Feedback:</strong> If you provide ideas, suggestions, or feedback, you agree we may use and implement them without compensation, credit, or obligation to you.</p>
     </section>
 
@@ -115,7 +203,7 @@
 
     <section id="disclaimers">
       <h2>9. Disclaimers</h2>
-      <p>The Service is provided on an <strong>“as is” and “as available”</strong> basis without warranties of any kind, express or implied, including merchantability, fitness for a particular purpose, and non-infringement.</p>
+      <p>The Service is provided on an <strong>"as is" and "as available"</strong> basis without warranties of any kind, express or implied, including merchantability, fitness for a particular purpose, and non-infringement.</p>
     </section>
 
     <section id="liability">
@@ -125,7 +213,7 @@
 
     <section id="indemnity">
       <h2>11. Indemnity</h2>
-      <p>You agree to indemnify and hold harmless <strong>Daniela Guerra Mira</strong> from any claims, liabilities, damages, losses, and expenses (including reasonable attorneys’ fees) arising from your use of the Service or your violation of these Terms.</p>
+      <p>You agree to indemnify and hold harmless <strong>Daniela Guerra Mira</strong> from any claims, liabilities, damages, losses, and expenses (including reasonable attorneys' fees) arising from your use of the Service or your violation of these Terms.</p>
     </section>
 
     <section id="termination">
@@ -140,12 +228,14 @@
 
     <section id="app-store">
       <h2>14. App Store Terms</h2>
-      <p class="note">If you download the app from the Apple App Store, you acknowledge that Apple is not responsible for maintenance/support, product warranties, or addressing claims. Apple and Apple’s subsidiaries are third-party beneficiaries of these Terms and may enforce them against you as a third-party beneficiary.</p>
+      <div class="callout" role="note">
+        If you download the app from the Apple App Store, you acknowledge that Apple is not responsible for maintenance/support, product warranties, or addressing claims. Apple and Apple's subsidiaries are third-party beneficiaries of these Terms and may enforce them against you as a third-party beneficiary.
+      </div>
     </section>
 
     <section id="changes">
       <h2>15. Changes to these Terms</h2>
-      <p>We may update these Terms from time to time. The latest version will be posted here, and the “Last Updated” date will reflect the effective date. Your continued use constitutes acceptance of the updated Terms.</p>
+      <p>We may update these Terms from time to time. The latest version will be posted here, and the "Last Updated" date will reflect the effective date. Your continued use constitutes acceptance of the updated Terms.</p>
     </section>
 
     <section id="contact">
@@ -153,10 +243,11 @@
       <p>Questions? Email <a href="mailto:support@yappculture.com">support@yappculture.com</a>.</p>
     </section>
 
-    <footer class="small">
+    <footer class="page-footer">
       <p>&copy; <span id="year"></span> Daniela Guerra Mira. All rights reserved.</p>
-      <script>document.getElementById('year').textContent = new Date().getFullYear()</script>
     </footer>
   </div>
+
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>

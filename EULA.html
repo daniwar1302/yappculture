@@ -3,54 +3,138 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>EULA — YAPP: For Yappers, By Yappers</title>
+  <title>EULA — YAPP</title>
   <meta name="description" content="End-User License Agreement (EULA) for YAPP: For Yappers, By Yappers." />
+  <link rel="icon" type="image/png" href="YAPP-3.png" />
+  <link href="https://fonts.cdnfonts.com/css/stilu" rel="stylesheet" />
   <style>
     :root {
-      --maxw: 900px;
-      --text: #111;
-      --muted: #666;
-      --border: #e5e7eb;
-      --link: #2563eb;
-      --bg: #ffffff;
-      --accent: #f8fafc;
+      --bg: #ffffff; --fg: #0a0a0a; --muted: #666; --faint: #999;
+      --border: #e8e8e8; --surface: #f7f6fa; --brand: #9425FF;
+      --brand-light: rgba(148,37,255,.07); --brand-glow: rgba(148,37,255,.18);
+      --maxw: 720px; --radius: 14px;
     }
-    html, body { background: var(--bg); color: var(--text); }
-    body { margin: 0; font: 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji"; }
-    .container { max-width: var(--maxw); margin: 0 auto; padding: 32px 20px 64px; }
-    header { padding: 20px 0 8px; border-bottom: 1px solid var(--border); margin-bottom: 24px; }
-    h1 { font-size: 2rem; line-height: 1.2; margin: 0 0 6px; }
-    .meta { color: var(--muted); font-size: 0.95rem; }
-    .tag { display: inline-block; background: var(--accent); border: 1px solid var(--border); border-radius: 8px; padding: 2px 8px; font-size: 0.8rem; margin-right: 6px; }
-    nav.toc { background: var(--accent); border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin: 20px 0 28px; }
-    nav.toc h2 { margin: 0 0 8px; font-size: 1rem; }
-    nav.toc ol { margin: 0; padding-left: 18px; }
-    section { margin: 28px 0; }
-    h2 { font-size: 1.25rem; margin: 0 0 8px; }
-    p, li { color: var(--text); }
-    ul { padding-left: 20px; }
-    a { color: var(--link); text-decoration: none; }
-    a:hover, a:focus { text-decoration: underline; }
-    footer { border-top: 1px solid var(--border); margin-top: 40px; padding-top: 16px; color: var(--muted); font-size: 0.95rem; }
-    .callout { background: #fff8db; border: 1px solid #fde68a; padding: 12px 14px; border-radius: 10px; font-size: 0.95rem; }
-    .small { font-size: 0.95rem; color: var(--muted); }
-    code { background: #f3f4f6; padding: 0 4px; border-radius: 4px; }
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    html, body { margin: 0; padding: 0; background: var(--bg); color: var(--fg); }
+    body {
+      font-family: 'Stilu', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-size: 16px; line-height: 1.7;
+    }
+
+    /* ── Top bar ── */
+    .top-bar {
+      position: sticky; top: 0; z-index: 10;
+      background: rgba(255,255,255,.88);
+      backdrop-filter: saturate(180%) blur(14px);
+      -webkit-backdrop-filter: saturate(180%) blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+    .top-bar-inner {
+      max-width: var(--maxw); margin: 0 auto; padding: 0 24px;
+      display: flex; align-items: center; justify-content: space-between; height: 56px;
+    }
+    .top-bar a { text-decoration: none; }
+    .back-link {
+      font-size: 14px; font-weight: 600; color: var(--brand);
+      display: inline-flex; align-items: center; gap: 6px;
+      transition: opacity .2s;
+    }
+    .back-link:hover { opacity: .7; }
+    .back-link svg { width: 16px; height: 16px; fill: currentColor; }
+    .brand-link { font-weight: 800; font-size: 18px; color: var(--fg); letter-spacing: -.02em; }
+
+    /* ── Container ── */
+    .container { max-width: var(--maxw); margin: 0 auto; padding: 48px 24px 80px; }
+
+    /* ── Header ── */
+    .page-header { margin-bottom: 36px; }
+    .page-header h1 {
+      font-weight: 800; font-size: clamp(26px, 5vw, 36px);
+      letter-spacing: -.02em; margin: 0 0 12px; line-height: 1.15;
+    }
+    .meta-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .pill {
+      display: inline-flex; align-items: center;
+      padding: 4px 12px; border-radius: 999px;
+      font-size: 12px; font-weight: 600;
+      background: var(--brand-light); color: var(--brand);
+      border: 1px solid rgba(148,37,255,.12);
+    }
+    .meta-text { font-size: 14px; color: var(--muted); line-height: 1.7; }
+    .meta-text a { color: var(--brand); text-decoration: none; }
+    .meta-text a:hover { text-decoration: underline; }
+
+    /* ── Table of contents ── */
+    .toc {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 20px 24px; margin-bottom: 40px;
+    }
+    .toc h2 { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin: 0 0 12px; }
+    .toc ol { margin: 0; padding-left: 20px; }
+    .toc li { margin: 4px 0; }
+    .toc a {
+      color: var(--fg); text-decoration: none; font-size: 14px; font-weight: 500;
+      transition: color .2s;
+    }
+    .toc a:hover { color: var(--brand); }
+
+    /* ── Sections ── */
+    section { margin: 32px 0; padding-top: 8px; }
+    section h2 {
+      font-weight: 700; font-size: 18px; margin: 0 0 10px;
+      padding-bottom: 8px; border-bottom: 2px solid var(--brand-light);
+    }
+    section p, section li { color: var(--fg); font-size: 15px; line-height: 1.75; }
+    section ul { padding-left: 20px; }
+    section li { margin: 4px 0; }
+    a { color: var(--brand); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    strong { font-weight: 700; }
+
+    /* ── Callout ── */
+    .callout {
+      background: #fffbeb; border-left: 3px solid #f59e0b;
+      padding: 14px 16px; border-radius: 0 var(--radius) var(--radius) 0;
+      font-size: 14px; line-height: 1.65; color: #92400e; margin-top: 12px;
+    }
+
+    /* ── Footer ── */
+    .page-footer {
+      margin-top: 48px; padding-top: 20px;
+      border-top: 1px solid var(--border);
+      font-size: 13px; color: var(--faint); text-align: center;
+    }
+
+    @media (max-width: 600px) {
+      .container { padding: 32px 18px 60px; }
+      .top-bar-inner { padding: 0 18px; }
+    }
   </style>
 </head>
 <body>
+  <div class="top-bar">
+    <div class="top-bar-inner">
+      <a href="/" class="back-link">
+        <svg viewBox="0 0 20 20"><path d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"/></svg>
+        Home
+      </a>
+      <a href="/" class="brand-link">YAPP</a>
+    </div>
+  </div>
+
   <div class="container">
-    <header>
-      <h1>End-User License Agreement (EULA)</h1>
-      <div class="meta">
-        <span class="tag">YAPP: For Yappers, By Yappers</span>
-        <span class="tag">App Store</span>
+    <header class="page-header">
+      <h1>End-User License Agreement</h1>
+      <div class="meta-row">
+        <span class="pill">YAPP: For Yappers, By Yappers</span>
+        <span class="pill">App Store</span>
       </div>
-      <p class="meta">
-        <strong>Developer:</strong> Daniela Guerra Mira (Individual Developer) •
-        <strong>Country:</strong> United States •
-        <strong>State:</strong> California<br />
+      <p class="meta-text">
+        <strong>Developer:</strong> Daniela Guerra Mira (Individual Developer)<br />
+        <strong>Location:</strong> California, United States<br />
         <strong>Contact:</strong> <a href="mailto:support@yappculture.com">support@yappculture.com</a><br />
-        <strong>Effective Date:</strong> <em>October 14, 2025</em>
+        <strong>Effective Date:</strong> October 14, 2025
       </p>
     </header>
 
@@ -78,7 +162,7 @@
 
     <section id="acceptance">
       <h2>1. Acceptance of Terms</h2>
-      <p>By downloading, installing, or using <strong>YAPP: For Yappers, By Yappers</strong> (“the App”), you (“User”) agree to be bound by this End-User License Agreement (“Agreement”). If you do not agree, do not install or use the App. This Agreement constitutes a binding contract between you and Daniela Guerra Mira (“Developer,” “we,” “us,” or “our”).</p>
+      <p>By downloading, installing, or using <strong>YAPP: For Yappers, By Yappers</strong> ("the App"), you ("User") agree to be bound by this End-User License Agreement ("Agreement"). If you do not agree, do not install or use the App. This Agreement constitutes a binding contract between you and Daniela Guerra Mira ("Developer," "we," "us," or "our").</p>
     </section>
 
     <section id="license-grant">
@@ -100,12 +184,12 @@
 
     <section id="ugc">
       <h2>4. User-Generated Content</h2>
-      <p>The App allows users to create and share text and upload images (“<strong>User Content</strong>”). You retain ownership of your User Content, but you grant us a <strong>worldwide, royalty-free, non-exclusive, sublicensable, and transferable license</strong> to host, use, reproduce, modify, display, and distribute your User Content for operating, improving, and promoting the App.</p>
+      <p>The App allows users to create and share text and upload images ("<strong>User Content</strong>"). You retain ownership of your User Content, but you grant us a <strong>worldwide, royalty-free, non-exclusive, sublicensable, and transferable license</strong> to host, use, reproduce, modify, display, and distribute your User Content for operating, improving, and promoting the App.</p>
       <p>You agree that your User Content will not:</p>
       <ul>
         <li>Contain hate speech, threats, harassment, or discrimination;</li>
         <li>Include pornography, nudity, or explicit material;</li>
-        <li>Infringe on others’ intellectual property, privacy, or publicity rights;</li>
+        <li>Infringe on others' intellectual property, privacy, or publicity rights;</li>
         <li>Include spam, scams, or misleading information.</li>
       </ul>
       <p>We have <strong>zero tolerance</strong> for objectionable content or abusive users. We may remove User Content and suspend or terminate accounts that violate these rules.</p>
@@ -134,7 +218,7 @@
     <section id="privacy">
       <h2>9. Privacy & Data Collection</h2>
       <p>We may collect personal information, including but not limited to <strong>name, phone number, age, and location</strong>, to enable features, improve your experience, and comply with legal requirements. By using the App, you consent to this data collection and processing in accordance with applicable laws.</p>
-      <p>For details on data handling, please review our <strong>Privacy Policy</strong> (available within the App or on our website).</p>
+      <p>For details on data handling, please review our <a href="PrivacyPolicy.html">Privacy Policy</a>.</p>
     </section>
 
     <section id="ip">
@@ -149,7 +233,7 @@
 
     <section id="warranty">
       <h2>12. Disclaimer of Warranties</h2>
-      <p>The App is provided on an <strong>“as is” and “as available”</strong> basis without warranties of any kind, whether express or implied, including but not limited to merchantability, fitness for a particular purpose, or non-infringement. Your use of the App is at your sole risk.</p>
+      <p>The App is provided on an <strong>"as is" and "as available"</strong> basis without warranties of any kind, whether express or implied, including but not limited to merchantability, fitness for a particular purpose, or non-infringement. Your use of the App is at your sole risk.</p>
     </section>
 
     <section id="liability">
@@ -170,17 +254,16 @@
     <section id="contact">
       <h2>16. Contact Us</h2>
       <p>For questions, feedback, or support, contact: <a href="mailto:support@yappculture.com">support@yappculture.com</a></p>
-      <div class="callout small" role="note" aria-label="App Store Note">
-        Note: The App may be distributed via the Apple App Store. Apple is not responsible for providing maintenance or support for the App, and you acknowledge that Apple is not responsible for addressing any claims relating to the App or your possession and/or use of the App.
+      <div class="callout" role="note">
+        The App may be distributed via the Apple App Store. Apple is not responsible for providing maintenance or support for the App, and you acknowledge that Apple is not responsible for addressing any claims relating to the App or your possession and/or use of the App.
       </div>
     </section>
 
-    <footer>
+    <footer class="page-footer">
       <p>&copy; <span id="year"></span> Daniela Guerra Mira. All rights reserved.</p>
-      <script>
-        document.getElementById('year').textContent = new Date().getFullYear();
-      </script>
     </footer>
   </div>
+
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>
