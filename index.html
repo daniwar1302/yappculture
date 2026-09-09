@@ -170,7 +170,7 @@
     /* ── Waitlist forms ── */
     .waitlist-form {
       width: 100%;
-      max-width: 520px;
+      max-width: 640px;
       scroll-margin-top: 88px;
     }
     .waitlist-fields {
@@ -193,6 +193,33 @@
       outline: none;
       border-color: #fff;
       background: rgba(255,255,255,.18);
+    }
+    .phone-group {
+      display: flex; align-items: stretch;
+      flex: 1 1 260px; min-width: 220px; height: 52px;
+      border-radius: 999px;
+      border: 1.5px solid rgba(255,255,255,.4);
+      background: rgba(255,255,255,.12);
+      overflow: hidden;
+    }
+    .phone-group:focus-within {
+      border-color: #fff;
+      background: rgba(255,255,255,.18);
+    }
+    .phone-group select {
+      border: 0; background: transparent;
+      color: #fff; font: inherit; font-size: 13px; font-weight: 600;
+      padding: 0 4px 0 14px; max-width: 158px;
+      cursor: pointer; outline: none;
+    }
+    .phone-group select option { color: #111; background: #fff; }
+    .phone-group input[type="tel"] {
+      border: 0; background: transparent;
+      min-width: 0; flex: 1 1 auto; height: 100%;
+      border-radius: 0; padding: 0 16px 0 8px;
+    }
+    .phone-group input[type="tel"]:focus {
+      border: 0; background: transparent;
     }
     .waitlist-form .hero-cta { flex: 0 0 auto; }
     .waitlist-msg {
@@ -335,7 +362,10 @@
       .hero { min-height: 580px; }
       .hero-cta { height: 48px; padding: 0 24px; font-size: 15px; }
       .waitlist-form input[type="email"],
-      .waitlist-form input[type="tel"] { height: 48px; }
+      .waitlist-form input[type="tel"],
+      .phone-group { height: 48px; }
+      .phone-group { flex: 1 1 100%; }
+      .phone-group select { max-width: 136px; font-size: 12px; }
       .about-grid { grid-template-columns: 1fr; gap: 24px; }
       .scroll-hint { bottom: 24px; }
     }
@@ -383,7 +413,10 @@
             </div>
             <div class="waitlist-fields">
               <input type="email" name="email" required placeholder="Email" autocomplete="email" />
-              <input type="tel" name="phone" required placeholder="Phone" autocomplete="tel" />
+              <div class="phone-group">
+                <select class="waitlist-country" aria-label="Country code"></select>
+                <input type="tel" name="phone" required placeholder="Phone number" autocomplete="tel" />
+              </div>
               <button type="submit" class="hero-cta">Join the Waitlist</button>
             </div>
             <p class="waitlist-msg" role="status"></p>
@@ -428,7 +461,10 @@
           </div>
           <div class="waitlist-fields">
             <input type="email" name="email" required placeholder="Email" autocomplete="email" />
-            <input type="tel" name="phone" required placeholder="Phone" autocomplete="tel" />
+            <div class="phone-group">
+              <select class="waitlist-country" aria-label="Country code"></select>
+              <input type="tel" name="phone" required placeholder="Phone number" autocomplete="tel" />
+            </div>
             <button type="submit" class="hero-cta">Join the Waitlist</button>
           </div>
           <p class="waitlist-msg" role="status"></p>
@@ -493,13 +529,83 @@
         window.addEventListener('scroll', hideHint, { passive: true });
       }
 
+      var COUNTRIES = [
+        ['1', 'United States (+1)'],
+        ['1', 'Canada (+1)'],
+        ['54', 'Argentina (+54)'],
+        ['61', 'Australia (+61)'],
+        ['880', 'Bangladesh (+880)'],
+        ['55', 'Brazil (+55)'],
+        ['86', 'China (+86)'],
+        ['57', 'Colombia (+57)'],
+        ['506', 'Costa Rica (+506)'],
+        ['45', 'Denmark (+45)'],
+        ['20', 'Egypt (+20)'],
+        ['33', 'France (+33)'],
+        ['49', 'Germany (+49)'],
+        ['233', 'Ghana (+233)'],
+        ['502', 'Guatemala (+502)'],
+        ['91', 'India (+91)'],
+        ['62', 'Indonesia (+62)'],
+        ['353', 'Ireland (+353)'],
+        ['972', 'Israel (+972)'],
+        ['39', 'Italy (+39)'],
+        ['81', 'Japan (+81)'],
+        ['254', 'Kenya (+254)'],
+        ['60', 'Malaysia (+60)'],
+        ['52', 'Mexico (+52)'],
+        ['31', 'Netherlands (+31)'],
+        ['64', 'New Zealand (+64)'],
+        ['234', 'Nigeria (+234)'],
+        ['92', 'Pakistan (+92)'],
+        ['51', 'Peru (+51)'],
+        ['63', 'Philippines (+63)'],
+        ['48', 'Poland (+48)'],
+        ['351', 'Portugal (+351)'],
+        ['7', 'Russia (+7)'],
+        ['65', 'Singapore (+65)'],
+        ['27', 'South Africa (+27)'],
+        ['82', 'South Korea (+82)'],
+        ['34', 'Spain (+34)'],
+        ['46', 'Sweden (+46)'],
+        ['66', 'Thailand (+66)'],
+        ['90', 'Turkey (+90)'],
+        ['971', 'United Arab Emirates (+971)'],
+        ['44', 'United Kingdom (+44)'],
+        ['84', 'Vietnam (+84)']
+      ];
+
+      document.querySelectorAll('.waitlist-country').forEach(function (sel) {
+        COUNTRIES.forEach(function (c, i) {
+          var opt = document.createElement('option');
+          opt.value = c[0];
+          opt.textContent = c[1];
+          if (i === 0) opt.selected = true;
+          sel.appendChild(opt);
+        });
+      });
+
       function isValidEmail(value) {
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
       }
 
-      function isValidPhone(value) {
-        var digits = value.replace(/\D/g, '');
-        return digits.length >= 7 && digits.length <= 15;
+      function toDigits(value) {
+        return String(value || '').replace(/\D/g, '');
+      }
+
+      function toE164(dial, raw) {
+        var trimmed = String(raw || '').trim();
+        if (/^00/.test(trimmed)) trimmed = trimmed.slice(2);
+        if (trimmed.charAt(0) === '+') trimmed = trimmed.slice(1);
+        var digits = toDigits(trimmed);
+        if (!digits) return '';
+        if (digits.indexOf(dial) === 0) return '+' + digits;
+        return '+' + dial + digits;
+      }
+
+      function isValidE164(value) {
+        var digits = toDigits(value);
+        return digits.length >= 8 && digits.length <= 15;
       }
 
       function scriptUrlConfigured() {
@@ -525,9 +631,12 @@
         form.addEventListener('submit', function (event) {
           event.preventDefault();
           var email = (form.email.value || '').trim();
-          var phone = (form.phone.value || '').trim();
+          var rawPhone = (form.phone.value || '').trim();
+          var country = form.querySelector('.waitlist-country');
+          var dial = country ? country.value : '1';
+          var e164 = toE164(dial, rawPhone);
 
-          if (!isValidEmail(email) || !isValidPhone(phone)) {
+          if (!isValidEmail(email) || !e164 || !isValidE164(e164)) {
             setMessage(form, 'Please enter a valid email and phone number.', 'err');
             return;
           }
@@ -537,6 +646,7 @@
             return;
           }
 
+          form.phone.value = e164;
           setSubmitting(form, true);
           setMessage(form, '', '');
 
@@ -550,10 +660,12 @@
                 setMessage(form, "You're on the list — we'll email you at launch", 'ok');
                 form.reset();
               } else {
+                form.phone.value = rawPhone;
                 setMessage(form, 'Something went wrong. Please try again.', 'err');
               }
             })
             .catch(function () {
+              form.phone.value = rawPhone;
               setMessage(form, 'Something went wrong. Please try again.', 'err');
             })
             .then(function () {
