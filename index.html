@@ -196,7 +196,7 @@
     }
     .phone-group {
       display: flex; align-items: stretch;
-      flex: 1 1 260px; min-width: 220px; height: 52px;
+      flex: 2 1 280px; min-width: 240px; height: 52px;
       border-radius: 999px;
       border: 1.5px solid rgba(255,255,255,.4);
       background: rgba(255,255,255,.12);
@@ -206,17 +206,38 @@
       border-color: #fff;
       background: rgba(255,255,255,.18);
     }
-    .phone-group select {
-      border: 0; background: transparent;
-      color: #fff; font: inherit; font-size: 13px; font-weight: 600;
-      padding: 0 4px 0 14px; max-width: 158px;
-      cursor: pointer; outline: none;
+    .country-prefix {
+      position: relative;
+      display: flex; align-items: center; justify-content: center;
+      flex: 0 0 auto;
+      padding: 0 10px 0 16px;
+      border-right: 1px solid rgba(255,255,255,.25);
     }
-    .phone-group select option { color: #111; background: #fff; }
+    .country-prefix .dial-code {
+      font-weight: 700; font-size: 14px; color: #fff;
+      white-space: nowrap;
+      padding-right: 14px;
+      pointer-events: none;
+    }
+    .country-prefix .dial-code::after {
+      content: '';
+      position: absolute; right: 10px; top: 50%;
+      width: 6px; height: 6px;
+      border-right: 1.5px solid rgba(255,255,255,.75);
+      border-bottom: 1.5px solid rgba(255,255,255,.75);
+      transform: translateY(-70%) rotate(45deg);
+    }
+    .country-prefix select {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      opacity: 0; cursor: pointer;
+      border: 0; font: inherit;
+    }
+    .country-prefix select option { color: #111; background: #fff; }
     .phone-group input[type="tel"] {
       border: 0; background: transparent;
-      min-width: 0; flex: 1 1 auto; height: 100%;
-      border-radius: 0; padding: 0 16px 0 8px;
+      min-width: 160px; flex: 1 1 auto; height: 100%;
+      border-radius: 0; padding: 0 16px;
     }
     .phone-group input[type="tel"]:focus {
       border: 0; background: transparent;
@@ -365,7 +386,7 @@
       .waitlist-form input[type="tel"],
       .phone-group { height: 48px; }
       .phone-group { flex: 1 1 100%; }
-      .phone-group select { max-width: 136px; font-size: 12px; }
+      .phone-group input[type="tel"] { min-width: 0; }
       .about-grid { grid-template-columns: 1fr; gap: 24px; }
       .scroll-hint { bottom: 24px; }
     }
@@ -414,7 +435,10 @@
             <div class="waitlist-fields">
               <input type="email" name="email" required placeholder="Email" autocomplete="email" />
               <div class="phone-group">
-                <select class="waitlist-country" aria-label="Country code"></select>
+                <div class="country-prefix">
+                  <span class="dial-code" aria-hidden="true">+1</span>
+                  <select class="waitlist-country" aria-label="Country code"></select>
+                </div>
                 <input type="tel" name="phone" required placeholder="Phone number" autocomplete="tel" />
               </div>
               <button type="submit" class="hero-cta">Join the Waitlist</button>
@@ -462,7 +486,10 @@
           <div class="waitlist-fields">
             <input type="email" name="email" required placeholder="Email" autocomplete="email" />
             <div class="phone-group">
-              <select class="waitlist-country" aria-label="Country code"></select>
+              <div class="country-prefix">
+                <span class="dial-code" aria-hidden="true">+1</span>
+                <select class="waitlist-country" aria-label="Country code"></select>
+              </div>
               <input type="tel" name="phone" required placeholder="Phone number" autocomplete="tel" />
             </div>
             <button type="submit" class="hero-cta">Join the Waitlist</button>
@@ -575,6 +602,12 @@
         ['84', 'Vietnam (+84)']
       ];
 
+      function syncDialCode(sel) {
+        var label = sel.closest('.country-prefix');
+        var dial = label && label.querySelector('.dial-code');
+        if (dial) dial.textContent = '+' + sel.value;
+      }
+
       document.querySelectorAll('.waitlist-country').forEach(function (sel) {
         COUNTRIES.forEach(function (c, i) {
           var opt = document.createElement('option');
@@ -583,6 +616,8 @@
           if (i === 0) opt.selected = true;
           sel.appendChild(opt);
         });
+        syncDialCode(sel);
+        sel.addEventListener('change', function () { syncDialCode(sel); });
       });
 
       function isValidEmail(value) {
@@ -659,6 +694,7 @@
               if (result.res.ok && result.data && result.data.ok) {
                 setMessage(form, "You're on the list — we'll email you at launch", 'ok');
                 form.reset();
+                if (country) syncDialCode(country);
               } else {
                 form.phone.value = rawPhone;
                 setMessage(form, 'Something went wrong. Please try again.', 'err');
